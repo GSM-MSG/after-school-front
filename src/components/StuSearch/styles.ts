@@ -23,6 +23,12 @@ export const Wrapper = styled.div`
   width: 37.375rem;
   height: 41.875rem;
   background: #1e1e1c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 700px) {
+    width: 85vw;
+  }
 `;
 
 export const Title = styled.h1`
@@ -40,8 +46,8 @@ export const Search = styled.div`
     margin: 0 10px;
     cursor: pointer;
   }
-  @media (max-width: 65rem) {
-    width: 54vw;
+  @media (max-width: 700px) {
+    width: 73vw;
   }
 `;
 
@@ -63,16 +69,20 @@ export const Input = styled.input`
   }
 `;
 export const ListBox = styled.div`
+  width: 23rem;
   height: 25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: scroll;
+  @media (max-width: 700px) {
+    width: 53vw;
+  }
 `;
 
 export const userBox = styled.div`
   margin: 2rem auto;
-  width: 23vw;
+  width: 100%;
   height: 120px;
   background: #fff;
   border-radius: 5px;
@@ -116,5 +126,8 @@ export const Choose = styled.div<CheckButtonType>`
     font-size: 1.5rem;
     border: none;
     cursor: pointer;
+  }
+  @media (max-width: 700px) {
+    width: 73vw;
   }
 `;

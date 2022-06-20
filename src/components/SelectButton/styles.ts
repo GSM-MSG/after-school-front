@@ -69,4 +69,7 @@ export const BtBox = styled.div<SelectButtonType>`
       transform: translateY(calc(-40rem / 8 * (var(--i) + 1)));
     }`
       : ""}
+  @media (max-width: 105rem) {
+    right: 15vw;
+  }
 `;
