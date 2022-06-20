@@ -1,7 +1,5 @@
-import AdminFirst from "../../components/AdminFirst";
-import ClubAdminFirst from "../../components/ClubAdminFirst";
+import AdminLogin from "../../components/AdminLogin";
 
-//AdminFirst||ClubAdminFirst 페이지
 export default function AdminPage() {
-  return <AdminFirst />;
+  return <AdminLogin />;
 }
