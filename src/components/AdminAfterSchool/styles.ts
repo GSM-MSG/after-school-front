@@ -253,6 +253,9 @@ export const AllButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 55rem) {
+    width: 90vw;
+  }
 `;
 
 export const AllButton = styled.button<ButtonType>`
@@ -276,6 +279,9 @@ export const AllButton = styled.button<ButtonType>`
   font-size: 0.9rem;
   width: 8rem;
   height: 2.5rem;
+  @media (max-width: 55rem) {
+    height: 4rem;
+  }
   animation: fadeInDown 1s;
   @keyframes fadeInDown {
     0% {

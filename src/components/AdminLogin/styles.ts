@@ -3,8 +3,11 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
   height: 100vh;
+  @media (max-width: 630px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -31,6 +34,12 @@ export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 630px) {
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 60px;
+    width: 100%;
+  }
   svg {
     margin-top: 8rem;
   }
@@ -60,6 +69,12 @@ export const LoginInput = styled.input`
   :focus {
     color: #1e1e1c;
   }
+  @media (max-width: 1700px) {
+    width: 35vw;
+  }
+  @media (max-width: 630px) {
+    width: 82vw;
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -72,6 +87,13 @@ export const LoginButton = styled.button`
   color: #fcffff;
   margin-top: 5rem;
   cursor: pointer;
+  @media (max-width: 1700px) {
+    width: 35vw;
+  }
+  @media (max-width: 630px) {
+    width: 82vw;
+    margin-top: 1rem;
+  }
   position: relative;
   overflow: hidden;
   &:hover:after {
