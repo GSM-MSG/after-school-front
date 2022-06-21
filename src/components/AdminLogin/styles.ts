@@ -93,6 +93,7 @@ export const LoginButton = styled.button`
   @media (max-width: 630px) {
     width: 82vw;
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   position: relative;
   overflow: hidden;
