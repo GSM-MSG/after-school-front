@@ -22,13 +22,13 @@ export default function Header({
       </Link>
       <S.Icons>
         {turn && (
-          <Link href={clickModal ? "/admin/afterSchool" : "/create"}>
+          <Link href={clickModal ? "/admin/afterschool" : "/create"}>
             <a onClick={() => clickModal && clickModal(true)}>
               <SVG.Plus />
             </a>
           </Link>
         )}
-        <Link href={link ? "/admin/stuEdit" : "/my"}>
+        <Link href={link ? "/admin/stuedit" : "/my"}>
           <a>
             <SVG.UserIcon />
           </a>

@@ -1,4 +1,3 @@
-import Header from "../Header";
 import React, { MouseEvent, useEffect, useState } from "react";
 import * as S from "./style";
 import { list } from "./dummyData";

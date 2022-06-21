@@ -24,6 +24,9 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    width: 79vw;
+  }
 `;
 
 export const Title = styled.h2`
@@ -35,7 +38,6 @@ export const RadioBox = styled.div`
   flex-direction: column;
 
   label {
-    /* background: red; */
     margin-left: 9rem;
     height: 1.5rem;
     margin-bottom: 2rem;
@@ -84,6 +86,12 @@ export const RadioBox = styled.div`
           }
         }
       }
+    }
+  }
+  @media (max-width: 700px) {
+    label {
+      margin-left: 21vw;
+      width: 35vw;
     }
   }
 `;

@@ -54,18 +54,39 @@ export const LoginTitle = styled.p`
   margin-bottom: 1rem;
 `;
 
+export const LoginInput = styled.input`
+  width: 600px;
+  height: 20px;
+  padding: 30px;
+  border-radius: 18px;
+  color: #bdbdbd;
+  border: 1px solid #1e1e1c;
+  font-size: 0.9rem;
+  background-color: transparent;
+  letter-spacing: 0.1px;
+  word-spacing: 0.2rem;
+  margin-top: 2.5rem;
+  :focus {
+    color: #1e1e1c;
+  }
+  @media (max-width: 1700px) {
+    width: 35vw;
+  }
+  @media (max-width: 630px) {
+    width: 82vw;
+  }
+`;
+
 export const LoginButton = styled.button`
-  width: 30rem;
-  height: 4rem;
+  width: 600px;
+  height: 60px;
   border: none;
   background: #4c53ff;
-  border-radius: 15px;
+  border-radius: 18px;
   font-size: 22px;
   color: #fcffff;
   margin-top: 5rem;
   cursor: pointer;
-  box-shadow: 0px 0px 10px rgb(102, 102, 102);
-
   @media (max-width: 1700px) {
     width: 35vw;
   }
@@ -91,36 +112,4 @@ export const LoginButton = styled.button`
     background: rgba(0, 0, 0, 0.1);
     transition: 1s cubic-bezier(0.23, 0.56, 0.68, 0.38);
   }
-`;
-
-export const OauthButton = styled.a`
-  margin-top: 5rem;
-  width: 30rem;
-  height: 4rem;
-  background: #fff;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 2rem 1rem;
-  box-shadow: 0px 0px 10px rgb(102, 102, 102);
-  svg {
-    height: 2rem;
-    width: 2rem;
-    margin: 10px;
-  }
-  @media (max-width: 1700px) {
-    width: 35vw;
-  }
-  @media (max-width: 630px) {
-    width: 82vw;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-`;
-
-export const LoginText = styled.div`
-  color: #000;
-  font-size: 1.3rem;
 `;

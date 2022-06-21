@@ -132,6 +132,9 @@ export const checkOverlap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  h2 {
+    white-space: nowrap;
+  }
   @media (max-width: 645px) {
     display: flex;
     flex-direction: column;
