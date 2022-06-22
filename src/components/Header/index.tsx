@@ -1,20 +1,17 @@
+import { NextPage } from "next";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 import * as SVG from "../../SVG";
 import * as S from "./styles";
 
-export default function Header({
-  turn = true,
-  link,
-  clickModal,
-}: {
+interface HeaderProps {
   turn?: boolean;
   link?: boolean;
   clickModal?: Dispatch<SetStateAction<boolean>>;
-}) {
-  useEffect(() => {}, []);
-  console.log(link);
+}
+
+const Header: NextPage<HeaderProps> = ({ turn = true, link, clickModal }) => {
   return (
     <S.Wrapper>
       <Link href="/">
@@ -36,4 +33,6 @@ export default function Header({
       </S.Icons>
     </S.Wrapper>
   );
-}
+};
+
+export default Header;
