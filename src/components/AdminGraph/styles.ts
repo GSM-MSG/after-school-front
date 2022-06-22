@@ -101,7 +101,8 @@ export const ListTitle = styled.div`
     width: 177px;
     padding: 20px 0;
     font-size: 1.2rem;
-    :nth-child(1) {
+
+    :first-of-type {
       width: 384px;
       margin-left: 2rem;
     }
@@ -132,7 +133,7 @@ export const List = styled.div<StateType>`
     width: 177px;
     padding: 20px 0;
     font-size: 1.2rem;
-    :nth-child(1) {
+    :first-of-type {
       width: 384px;
       margin-left: 2rem;
     }

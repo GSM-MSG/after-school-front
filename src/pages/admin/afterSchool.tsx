@@ -7,7 +7,7 @@ export default function AfterSchool() {
   const [create, setCreate] = useState(false);
   return (
     <>
-      <Header clickModal={setCreate} link={true} />
+      <Header clickModal={setCreate} />
       <AdminAfterSchool />
       {create && <CreateAfterSchool setCreate={setCreate} />}
     </>
