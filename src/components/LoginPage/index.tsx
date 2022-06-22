@@ -1,6 +1,7 @@
 import { ServerUrl } from "../../config/config";
 import * as S from "./styles";
 import * as SVG from "../../SVG";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -20,7 +21,9 @@ export default function LoginPage() {
           <SVG.Google />
           <S.LoginText>Sign in with Google</S.LoginText>
         </S.OauthButton>
-        <S.LoginButton>어드민 페이지 로그인</S.LoginButton>
+        <Link href="/admin">
+          <S.AdminLogin>어드민 페이지 로그인</S.AdminLogin>
+        </Link>
       </S.LoginWrapper>
     </S.Wrapper>
   );

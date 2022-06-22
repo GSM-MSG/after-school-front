@@ -54,7 +54,7 @@ export const LoginTitle = styled.p`
   margin-bottom: 1rem;
 `;
 
-export const LoginButton = styled.button`
+export const AdminLogin = styled.a`
   width: 30rem;
   height: 4rem;
   border: none;
@@ -65,6 +65,10 @@ export const LoginButton = styled.button`
   margin-top: 5rem;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgb(102, 102, 102);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 1700px) {
     width: 35vw;
@@ -89,7 +93,7 @@ export const LoginButton = styled.button`
     top: 0;
     right: 100%;
     background: rgba(0, 0, 0, 0.1);
-    transition: 1s cubic-bezier(0.23, 0.56, 0.68, 0.38);
+    transition: 0.5s cubic-bezier(0.23, 0.56, 0.68, 0.38);
   }
 `;
 

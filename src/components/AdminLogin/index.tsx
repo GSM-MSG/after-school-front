@@ -1,12 +1,11 @@
 import * as S from "./styles";
 import * as SVG from "../../SVG";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function AdminLogin() {
-  const [login, setLogin] = useState({
-    email: "",
-    password: "",
-  });
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async (data: any) => {};
 
   return (
     <S.Wrapper>
@@ -18,22 +17,19 @@ export default function AdminLogin() {
         </S.MainTitle>
         <SVG.Whale />
       </S.TitleWrapper>
-      <S.LoginWrapper>
+      <S.LoginWrapper onSubmit={handleSubmit(onSubmit)}>
         <SVG.LogoBlack />
         <S.LoginTitle>Sign in</S.LoginTitle>
         <S.LoginInput
-          type="email"
+          {...register("email", { required: true })}
           placeholder="이메일을 입력하세요"
           autoComplete="off"
-          value={login.email}
-          onChange={(e) => setLogin({ ...login, email: e.target.value })}
         />
         <S.LoginInput
           type="password"
+          {...register("password", { required: true })}
           placeholder="비밀번호를 입력하세요"
           autoCapitalize="off"
-          value={login.password}
-          onChange={(e) => setLogin({ ...login, password: e.target.value })}
         />
         <S.LoginButton type="submit">로그인</S.LoginButton>
       </S.LoginWrapper>
