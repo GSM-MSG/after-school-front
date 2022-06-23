@@ -2,67 +2,16 @@ import styled from "@emotion/styled";
 
 type StlyedProps = {
   state?: boolean;
-};
-
-type FilterProps = {
-  filter: string;
+  name?: string;
 };
 
 export const AfterSchool = styled.div`
-  height: none;
+  margin: 4rem 0 1rem;
+  padding: 0 1rem;
 `;
 
-export const AfterSchoolBox = styled.div<FilterProps>`
+export const AfterSchoolBox = styled.div`
   background-color: #1e1e1c;
-  animation: ${(props) => {
-    return props.filter === "true" ? "fadeInDown 1s" : "fadeInUp 1s";
-  }};
-  @keyframes fadeInDown {
-    0% {
-      opacity: calc(0);
-    }
-  }
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: calc(0);
-    }
-  }
-`;
-
-export const Search = styled.div`
-  width: 35rem;
-  height: 4rem;
-  margin: 0 auto;
-  margin-top: 8rem;
-  border-bottom: 2px solid white;
-  align-items: center;
-  display: flex;
-  svg {
-    margin: 0 10px;
-    cursor: pointer;
-  }
-  @media (max-width: 65rem) {
-    width: 54vw;
-  }
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  height: 3rem;
-  color: white;
-  font-size: 1rem;
-  font-weight: 100;
-  background-color: transparent;
-  border: none;
-  ::placeholder {
-    font-size: 1rem;
-    padding-left: 5vw;
-    text-align: center;
-  }
-  :focus {
-    outline: none;
-  }
 `;
 
 export const CurseList = styled.div`
@@ -141,6 +90,7 @@ export const Enrolment = styled.div`
     width: 90vw;
   }
 `;
+
 export const SelectButton = styled.button<StlyedProps>`
   width: 6rem;
   height: 2.5rem;
@@ -178,7 +128,7 @@ export const SelectButton = styled.button<StlyedProps>`
     top: 0;
     right: 100%;
     background: rgba(0, 0, 0, 0.1);
-    transition: 0.5s cubic-bezier(0.23, 0.56, 0.68, 0.38);
+    transition: 0.2s cubic-bezier(0.23, 0.56, 0.68, 0.38);
   }
   @media (max-width: 55rem) {
     display: block;
@@ -196,18 +146,11 @@ export const ScollBox = styled.div`
 `;
 
 export const FilterBox = styled.div`
-  margin: 0 auto;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
-  width: 28rem;
   display: flex;
   justify-content: space-between;
-  @media (max-width: 62rem) {
-    width: 45vw;
-  }
-  @media (max-width: 45rem) {
-    width: 20rem;
-  }
+  max-width: 40rem;
+  width: 90%;
+  margin: 0 auto;
 `;
 
 export const FilterList = styled.div`
@@ -219,7 +162,6 @@ export const FilterList = styled.div`
 `;
 
 export const FilterElement = styled.div<StlyedProps>`
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,7 +170,13 @@ export const FilterElement = styled.div<StlyedProps>`
   width: 6em;
   padding: 7px 10px;
   border-radius: 23px;
-  background-color: ${({ state }) => (state ? "#A5A5FE" : "transparent")};
+  background: ${({ state }) => (state ? "#A5A5FE" : "transparent")};
+  cursor: pointer;
+  transition: 0.2s;
+
+  :hover {
+    background: ${({ state }) => (state ? "#A5A5FE" : "#a5a5fe38")};
+  }
 `;
 
 export const NotFilter = styled.div`

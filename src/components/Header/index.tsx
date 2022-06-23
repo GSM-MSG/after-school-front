@@ -7,7 +7,7 @@ import * as S from "./styles";
 
 interface HeaderProps {
   turn?: boolean;
-  clickModal: Dispatch<SetStateAction<boolean>>;
+  clickModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 const Header: NextPage<HeaderProps> = ({ turn = true, clickModal }) => {
@@ -18,7 +18,7 @@ const Header: NextPage<HeaderProps> = ({ turn = true, clickModal }) => {
       </Link>
       <S.Icons>
         {turn ? (
-          <div onClick={() => clickModal(true)}>
+          <div onClick={() => clickModal && clickModal(true)}>
             <SVG.Plus />
           </div>
         ) : (

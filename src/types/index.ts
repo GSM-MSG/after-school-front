@@ -6,3 +6,4 @@ export * from "./KindOption";
 export * from "./UsersType";
 export * from "./MyPageType";
 export * from "./AfterSchoolType";
+export * from "./WeekType";
