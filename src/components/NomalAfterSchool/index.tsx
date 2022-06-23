@@ -18,8 +18,8 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
     const value = e.currentTarget.getAttribute("name") as WeekType;
 
     if (Number(value)) {
-      setGrade(Number(value));
-    } else setWeek(value);
+      setGrade(Number(value) === grade ? null : Number(value));
+    } else setWeek(value === week ? null : value);
   };
 
   const applyAndCancel = async (id: number, isApplied: boolean) => {
