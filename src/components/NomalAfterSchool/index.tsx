@@ -1,8 +1,16 @@
 import React, { MouseEvent, useState } from "react";
 import * as S from "./style";
-import { WeekType } from "../../types";
+import { PropListType, WeekType } from "../../types";
+import { NextPage } from "next";
+import { WeekKorean } from "../../lib/WeekKorean";
+import produce from "immer";
 
-export default function NomalAfterSchool() {
+interface NomalAfterSchoolProps {
+  data: PropListType[];
+}
+
+const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
+  const [afterSchools, setAfterSchools] = useState<PropListType[]>(data);
   const [week, setWeek] = useState<WeekType | null>(null);
   const [grade, setGrade] = useState<number | null>(null);
 
@@ -11,6 +19,17 @@ export default function NomalAfterSchool() {
 
     if (Number(value)) setGrade(Number(value));
     else setWeek(value);
+  };
+
+  const applyAndCancel = async (id: number, isApplied: boolean) => {
+    setAfterSchools(
+      produce(afterSchools, (draft) => {
+        return draft.map((i) => {
+          if (i.id === id) return { ...i, isApplied: !isApplied };
+          return i;
+        });
+      })
+    );
   };
 
   return (
@@ -48,16 +67,33 @@ export default function NomalAfterSchool() {
           <span>대상학년</span>
         </S.CurseList>
         <S.ScollBox>
-          <S.Enrolment>
-            <div>
-              <p>어쩌고</p>
-              <p>월</p>
-              <p>1학년</p>
-            </div>
-            <S.SelectButton>신청</S.SelectButton>
-          </S.Enrolment>
+          {afterSchools.map(
+            (i) =>
+              i.isOpend && (
+                <S.Enrolment key={i.id}>
+                  <div>
+                    <p>{i.title}</p>
+                    <p>
+                      {i.week.map((week, i) =>
+                        i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
+                      )}
+                    </p>
+                    <p>{i.grade}</p>
+                  </div>
+                  {i.isEnabled && (
+                    <S.SelectButton
+                      onClick={() => applyAndCancel(i.id, i.isApplied)}
+                    >
+                      {i.isApplied ? "취소" : "신청"}
+                    </S.SelectButton>
+                  )}
+                </S.Enrolment>
+              )
+          )}
         </S.ScollBox>
       </S.AfterSchoolBox>
     </S.AfterSchool>
   );
-}
+};
+
+export default NomalAfterSchool;
