@@ -17,8 +17,9 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
     const value = e.currentTarget.getAttribute("name") as WeekType;
 
-    if (Number(value)) setGrade(Number(value));
-    else setWeek(value);
+    if (Number(value)) {
+      setGrade(Number(value));
+    } else setWeek(value);
   };
 
   const applyAndCancel = async (id: number, isApplied: boolean) => {
@@ -67,29 +68,38 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
           <span>대상학년</span>
         </S.CurseList>
         <S.ScollBox>
-          {afterSchools.map(
-            (i) =>
-              i.isOpend && (
-                <S.Enrolment key={i.id}>
-                  <div>
-                    <p>{i.title}</p>
-                    <p>
-                      {i.week.map((week, i) =>
-                        i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
-                      )}
-                    </p>
-                    <p>{i.grade}</p>
-                  </div>
-                  {i.isEnabled && (
-                    <S.SelectButton
-                      onClick={() => applyAndCancel(i.id, i.isApplied)}
-                    >
-                      {i.isApplied ? "취소" : "신청"}
-                    </S.SelectButton>
-                  )}
-                </S.Enrolment>
-              )
-          )}
+          {afterSchools
+            .filter((i) => {
+              if (!week) return i;
+              return i.week.includes(week);
+            })
+            .filter((i) => {
+              if (!grade) return i;
+              return i.grade === grade;
+            })
+            .map(
+              (i) =>
+                i.isOpend && (
+                  <S.Enrolment key={i.id}>
+                    <div>
+                      <p>{i.title}</p>
+                      <p>
+                        {i.week.map((week, i) =>
+                          i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
+                        )}
+                      </p>
+                      <p>{i.grade}</p>
+                    </div>
+                    {i.isEnabled && (
+                      <S.SelectButton
+                        onClick={() => applyAndCancel(i.id, i.isApplied)}
+                      >
+                        {i.isApplied ? "취소" : "신청"}
+                      </S.SelectButton>
+                    )}
+                  </S.Enrolment>
+                )
+            )}
         </S.ScollBox>
       </S.AfterSchoolBox>
     </S.AfterSchool>

@@ -2,7 +2,7 @@ export type UserState = {
   id: number;
   title?: string;
   grade: number;
-  week: string;
+  week: weekType[];
   isApplied: boolean;
 };
 export type weekType = "MON" | "TUE" | "WED";
