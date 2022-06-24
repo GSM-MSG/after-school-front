@@ -9,6 +9,7 @@ import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Link from "next/link";
 import SelectSeason from "../../components/SelectSeason";
 import { useRouter } from "next/router";
+import { WeekKorean } from "../../lib/WeekKorean";
 
 export default function AdminAfterSchool() {
   //요일 오브벡트 타입
@@ -83,15 +84,7 @@ export default function AdminAfterSchool() {
     if (search === "") {
       return list;
     } else {
-      const MakeList = list.filter(
-        (e) =>
-          e.title.includes(search) ||
-          `${e.grade}` === search ||
-          `${e.grade}학년` === search ||
-          changeWeek(e.week[0]).includes(search) ||
-          `${changeWeek(e.week[0])}요일`.includes(search)
-      );
-      return MakeList;
+      return list.filter((e) => e.title.includes(search));
     }
   };
   //번튼 생성 함수
@@ -147,26 +140,11 @@ export default function AdminAfterSchool() {
       );
     }
   };
-  //요일 변경 함수
-
-  const changeWeek: Type.ChangeWeekType = (e) => {
-    switch (e) {
-      case "MON":
-        return "월";
-      case "TUE":
-        return "화";
-      case "WED":
-        return "수";
-      default:
-        console.error("Week Error");
-        break;
-    }
-  };
   //날짜 오브젝트 생성 함수
   const changeCheckDay = (e: MouseEvent) => {
     const findCheckIndex: number = day.findIndex(
       (element) =>
-        changeWeek(element.day) + "요일" ===
+        WeekKorean[element.day] + "요일" ===
         (e.target as HTMLSpanElement).outerText
     );
     const newList = day.map((item, i) => {
@@ -266,7 +244,7 @@ export default function AdminAfterSchool() {
           <SVG.SearchFilter />
         </i>
       </S.Search>
-      {filter ? (
+      {filter && (
         <S.FilterBox>
           <S.FilterList>
             <p>요일</p>
@@ -277,7 +255,7 @@ export default function AdminAfterSchool() {
                   state={e.check}
                   onClick={changeCheckDay}
                 >
-                  {changeWeek(e.day) + "요일"}
+                  {WeekKorean[e.day] + "요일"}
                 </S.FilterElement>
               );
             })}
@@ -297,8 +275,6 @@ export default function AdminAfterSchool() {
             })}
           </S.FilterList>
         </S.FilterBox>
-      ) : (
-        ""
       )}
       <S.AfterSchoolBox filter={`${filter}`}>
         <S.CurseList>
@@ -323,7 +299,7 @@ export default function AdminAfterSchool() {
               <S.Enrolment key={i}>
                 <div>
                   <p>{e.title}</p>
-                  <p>{changeWeek(e.week[0])}</p>
+                  <p>{WeekKorean[e.week[0]]}</p>
                   <p>{e.grade}</p>
                 </div>
                 {makeSelectButton(e)}
