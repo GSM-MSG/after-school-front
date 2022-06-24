@@ -69,8 +69,6 @@ export default function AdminAfterSchool() {
     title: "",
     week: ["MON"],
     grade: 0,
-    personnel: 0,
-    maxPersonnel: 0,
     isOpend: true,
     isApplied: true,
     isEnabled: true,
