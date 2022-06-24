@@ -30,7 +30,7 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
       await checkQuery(async () => {
         if (!isApplied)
           return api.post("afterschool/apply", { afterSchoolId: id });
-        else return api.post("afterschool/cancel", { afterSchoolId: id });
+        return api.post("afterschool/cancel", { afterSchoolId: id });
       });
 
       setAfterSchools(
