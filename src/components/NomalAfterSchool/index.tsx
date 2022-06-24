@@ -4,6 +4,9 @@ import { PropListType, WeekType } from "../../types";
 import { NextPage } from "next";
 import { WeekKorean } from "../../lib/WeekKorean";
 import produce from "immer";
+import api from "../../lib/api";
+import { toast } from "react-toastify";
+import checkQuery from "../../lib/checkQuery";
 
 interface NomalAfterSchoolProps {
   data: PropListType[];
@@ -23,14 +26,24 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
   };
 
   const applyAndCancel = async (id: number, isApplied: boolean) => {
-    setAfterSchools(
-      produce(afterSchools, (draft) => {
-        return draft.map((i) => {
-          if (i.id === id) return { ...i, isApplied: !isApplied };
-          return i;
-        });
-      })
-    );
+    try {
+      await checkQuery(async () =>
+        api.post(`afterschool/${isApplied ? "cancel" : "apply"}`, {
+          afterSchoolId: id,
+        })
+      );
+
+      setAfterSchools(
+        produce(afterSchools, (draft) => {
+          return draft.map((i) => {
+            if (i.id === id) return { ...i, isApplied: !isApplied };
+            return i;
+          });
+        })
+      );
+    } catch (e) {
+      toast.error(`방과후 ${isApplied ? "취소" : "신청"}에 실패했습니다`);
+    }
   };
 
   return (
