@@ -23,7 +23,7 @@ const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
   return (
     <>
       <Header clickModal={setCreate} />
-      <AdminAfterSchool />
+      <AdminAfterSchool data={data} />
       {create && <CreateAfterSchool setCreate={setCreate} />}
     </>
   );

@@ -1,6 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from "react";
 import * as S from "./styles";
-import { list } from "./dummyData";
 import * as Type from "../../types/AfterSchoolType";
 import * as SVG from "../../SVG";
 import SelectButton from "../../components/SelectButton";
@@ -10,8 +9,18 @@ import Link from "next/link";
 import SelectSeason from "../../components/SelectSeason";
 import { useRouter } from "next/router";
 import { WeekKorean } from "../../lib/WeekKorean";
+import checkQuery from "../../lib/checkQuery";
+import api from "../../lib/api";
+import { toast } from "react-toastify";
+import { NextPage } from "next";
 
-export default function AdminAfterSchool() {
+interface AdminAfterSchoolProps {
+  data: Type.PropListType[];
+}
+
+const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
+  const [afterSchools, setAfterSchools] = useState<Type.PropListType[]>(data);
+
   //요일 오브벡트 타입
   type FilterDayType = {
     day: "MON" | "TUE" | "WED";
@@ -82,28 +91,50 @@ export default function AdminAfterSchool() {
   //검색 리스트 생성 함수
   const ChangeAfterList = () => {
     if (search === "") {
-      return list;
+      return afterSchools;
     } else {
-      return list.filter((e) => e.title.includes(search));
+      return afterSchools.filter((e) => e.title.includes(search));
     }
   };
+
+  const deleteAfterSchool = async (id: number) => {
+    try {
+      await checkQuery(async () =>
+        api.delete(`afterSchool?afterSchoolIdx=${id}`)
+      );
+
+      setAfterSchools(afterSchools.filter((i) => i.id !== id));
+
+      toast.success("방과후 삭제에 성공했습니다");
+    } catch (e) {
+      toast.error("방과후 삭제에 실패했습니다");
+    }
+  };
+
+  const editAfterSchool = async (e: Type.PropListType) => {
+    try {
+      setFix(true);
+      setFixState(e);
+    } catch (e) {
+      toast.error("방과후 수정에 실패했습니다");
+    }
+  };
+
+  const closeAfterSchool = async () => {};
+
+  const openAfterSchool = async () => {};
+
   //번튼 생성 함수
   const makeSelectButton = (e: Type.PropListType) => {
     if (category === 0) {
       return (
-        <S.SelectButton
-          onClick={() => {
-            setFix(true);
-            setFixState(e);
-          }}
-          color={"blue"}
-        >
+        <S.SelectButton onClick={() => editAfterSchool(e)} color={"blue"}>
           수정하기
         </S.SelectButton>
       );
     } else if (category === 1) {
       return (
-        <S.SelectButton onClick={() => console.log("삭제하기")} color={"red"}>
+        <S.SelectButton onClick={() => deleteAfterSchool(e.id)} color={"red"}>
           삭제하기
         </S.SelectButton>
       );
@@ -113,19 +144,13 @@ export default function AdminAfterSchool() {
       switch (e.isApplied) {
         case true:
           return (
-            <S.SelectButton
-              onClick={() => console.log("마감하기")}
-              color={"red"}
-            >
+            <S.SelectButton onClick={closeAfterSchool} color={"red"}>
               마감하기
             </S.SelectButton>
           );
         case false:
           return (
-            <S.SelectButton
-              onClick={() => console.log("신청받기")}
-              color={"blue"}
-            >
+            <S.SelectButton onClick={openAfterSchool} color={"blue"}>
               신청받기
             </S.SelectButton>
           );
@@ -201,13 +226,13 @@ export default function AdminAfterSchool() {
     if (CheckDay.length === 0 && CheckGrade.length === 0) {
       setAfterList(ChangeAfterList());
     } else if (CheckDay.length === 0 && CheckGrade.length === 1) {
-      newList = list.filter((e) => e.grade === CheckGrade[0].grade);
+      newList = afterSchools.filter((e) => e.grade === CheckGrade[0].grade);
       setAfterList(newList);
     } else if (CheckDay.length === 1 && CheckGrade.length === 0) {
-      newList = list.filter((e) => e.week.includes(CheckDay[0].day));
+      newList = afterSchools.filter((e) => e.week.includes(CheckDay[0].day));
       setAfterList(newList);
     } else if (CheckDay.length === 1 && CheckGrade.length === 1) {
-      newList = list.filter(
+      newList = afterSchools.filter(
         (e) =>
           e.week.includes(CheckDay[0].day) && e.grade === CheckGrade[0].grade
       );
@@ -314,4 +339,6 @@ export default function AdminAfterSchool() {
       {allSelect && <SelectSeason setAllSelect={setAllSelect} />}
     </S.AfterSchool>
   );
-}
+};
+
+export default AdminAfterSchool;
