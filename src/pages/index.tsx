@@ -1,15 +1,29 @@
 import { GetServerSideProps, NextPage } from "next";
 import Header from "../components/Header";
 import NomalAfterSchool from "../components/NomalAfterSchool";
-import { list } from "../components/NomalAfterSchool/dummyData";
+import api from "../lib/api";
+import userCheck from "../lib/userCheck";
 import { PropListType } from "../types";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      data: list,
-    },
-  };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const { cookies, accessToken } = await userCheck(ctx);
+
+    const { data } = await api.get("afterschool");
+
+    if (cookies) ctx.res.setHeader("set-cookie", cookies);
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {},
+      redirect: { destination: "/login" },
+    };
+  }
 };
 
 interface AfterSchoolProps {

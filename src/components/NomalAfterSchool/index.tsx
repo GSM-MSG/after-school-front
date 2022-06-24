@@ -6,6 +6,7 @@ import { WeekKorean } from "../../lib/WeekKorean";
 import produce from "immer";
 import api from "../../lib/api";
 import { toast } from "react-toastify";
+import checkQuery from "../../lib/checkQuery";
 
 interface NomalAfterSchoolProps {
   data: PropListType[];
@@ -26,18 +27,12 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
 
   const applyAndCancel = async (id: number, isApplied: boolean) => {
     try {
-      if (!isApplied)
-        await api.post(
-          "afterschool/apply",
-          { afterSchoolId: id },
-          { withCredentials: true }
-        );
-      else
-        api.post(
-          "afterschool/cancel",
-          { afterSchoolId: id },
-          { withCredentials: true }
-        );
+      await checkQuery(async () => {
+        if (!isApplied)
+          return api.post("afterschool/apply", { afterSchoolId: id });
+        else return api.post("afterschool/cancel", { afterSchoolId: id });
+      });
+
       setAfterSchools(
         produce(afterSchools, (draft) => {
           return draft.map((i) => {
