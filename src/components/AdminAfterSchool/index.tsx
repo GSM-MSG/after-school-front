@@ -14,6 +14,7 @@ import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { NextPage } from "next";
 import { FixAfterSchool } from "../../types";
+import produce from "immer";
 
 interface AdminAfterSchoolProps {
   data: Type.PropListType[];
@@ -101,17 +102,41 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   };
 
   const editAfterSchool = async (e: FixAfterSchool) => {
-    try {
-      setFix(true);
-      setFixState(e);
-    } catch (e) {
-      toast.error("방과후 수정에 실패했습니다");
-    }
+    setFix(true);
+    setFixState(e);
   };
 
-  const closeAfterSchool = async () => {};
+  const closeAndOpenAfterSchool = async (
+    id: number,
+    type: "open" | "close"
+  ) => {
+    try {
+      await checkQuery(async () =>
+        api.put(`afterSchool/${type}?afterSchoolIdx=${id}`)
+      );
 
-  const openAfterSchool = async () => {};
+      setAfterSchools(
+        produce(afterSchools, (draft) => {
+          draft = draft.map((i) => {
+            if (i.id === id)
+              return {
+                ...i,
+                isOpend: type === "open",
+              };
+            return i;
+          });
+        })
+      );
+
+      toast.success(
+        `방과후 ${type === "open" ? "오픈" : "마감"}에 성공했습니다`
+      );
+    } catch (e) {
+      toast.error(
+        `방과후 ${type === "open" ? "오픈" : "마감"}마감에 실패했습니다`
+      );
+    }
+  };
 
   //번튼 생성 함수
   const makeSelectButton = (e: Type.PropListType) => {
@@ -145,13 +170,19 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
       switch (e.isApplied) {
         case true:
           return (
-            <S.SelectButton onClick={closeAfterSchool} color={"red"}>
+            <S.SelectButton
+              onClick={() => closeAndOpenAfterSchool(e.id, "close")}
+              color={"red"}
+            >
               마감하기
             </S.SelectButton>
           );
         case false:
           return (
-            <S.SelectButton onClick={openAfterSchool} color={"blue"}>
+            <S.SelectButton
+              onClick={() => closeAndOpenAfterSchool(e.id, "open")}
+              color={"blue"}
+            >
               신청받기
             </S.SelectButton>
           );
