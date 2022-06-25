@@ -89,9 +89,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
 
   const deleteAfterSchool = async (id: number) => {
     try {
-      await checkQuery(async () =>
-        api.delete(`afterSchool?afterSchoolIdx=${id}`)
-      );
+      await checkQuery(async () => api.delete(`afterSchool/${id}`));
 
       setAfterSchools(afterSchools.filter((i) => i.id !== id));
 
@@ -111,9 +109,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     type: "open" | "close"
   ) => {
     try {
-      await checkQuery(async () =>
-        api.put(`afterSchool/${type}?afterSchoolIdx=${id}`)
-      );
+      await checkQuery(async () => api.put(`afterSchool/${type}/${id}`));
 
       setAfterSchools(
         produce(afterSchools, (draft) => {
