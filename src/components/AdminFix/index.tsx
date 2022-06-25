@@ -6,7 +6,9 @@ import React, {
   SetStateAction,
 } from "react";
 import { toast } from "react-toastify";
-import { FixAfterSchool, WeekType } from "../../types";
+import api from "../../lib/api";
+import checkQuery from "../../lib/checkQuery";
+import { FixAfterSchool, PropListType, WeekType } from "../../types";
 import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
 
@@ -14,10 +16,14 @@ export function AdminFix({
   setFix,
   setState,
   state,
+  afterSchools,
+  setAfterSchools,
 }: {
   setFix: Dispatch<SetStateAction<boolean>>;
   setState: Dispatch<SetStateAction<FixAfterSchool>>;
   state: FixAfterSchool;
+  setAfterSchools: Dispatch<SetStateAction<PropListType[]>>;
+  afterSchools: PropListType[];
 }) {
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
     setState({
@@ -56,7 +62,7 @@ export function AdminFix({
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!state.title) {
       toast.error("강좌명을 입력해 주세요");
       return;
@@ -68,6 +74,28 @@ export function AdminFix({
     if (!state.teacher) {
       toast.error("담당 선생님 이름을 입력해 주세요");
       return;
+    }
+    try {
+      await checkQuery(async () =>
+        api.put(`/afterSchool?afterSchoolIdx=${state.id}`, {
+          ...state,
+          yearOf: new Date().getFullYear(),
+          id: undefined,
+        })
+      );
+
+      setAfterSchools(
+        produce(afterSchools, (draft) => {
+          return draft.map((i) => {
+            if (i.id === state.id) return { ...i, ...state };
+            return { ...i };
+          });
+        })
+      );
+
+      toast.success("방과후 수정에 성공했습니다");
+    } catch (e) {
+      toast.error("방과후 수정에 실패했습니다");
     }
     setFix(false);
   };

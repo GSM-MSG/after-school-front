@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import * as S from "./styles";
 import * as Type from "../../types/AfterSchoolType";
 import * as SVG from "../../SVG";
@@ -14,7 +14,6 @@ import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { NextPage } from "next";
 import { FixAfterSchool } from "../../types";
-import produce from "immer";
 
 interface AdminAfterSchoolProps {
   data: Type.PropListType[];
@@ -219,35 +218,6 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     setGrade(newList);
   };
 
-  useEffect(() => {
-    if (!fix) {
-      (async () => {
-        try {
-          await checkQuery(async () =>
-            api.put(`/afterSchool?afterSchoolIdx=${fixState.id}`, {
-              ...fixState,
-              yearOf: new Date().getFullYear(),
-              id: undefined,
-            })
-          );
-
-          setAfterSchools(
-            produce(afterSchools, (draft) => {
-              return draft.map((i) => {
-                if (i.id === fixState.id) return { ...i, ...fixState };
-                return { ...i };
-              });
-            })
-          );
-
-          toast.success("방과후 수정에 성공했습니다");
-        } catch (e) {
-          toast.error("방과후 수정에 실패했습니다");
-        }
-      })();
-    }
-  }, [fix]);
-
   return (
     <S.AfterSchool>
       <S.Search>
@@ -339,7 +309,13 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
       <SelectButton setCategory={setCategory} />
       {create && <CreateAfterSchool setCreate={setCreate} />}
       {fix && (
-        <AdminFix setFix={setFix} setState={setFixState} state={fixState} />
+        <AdminFix
+          setFix={setFix}
+          setState={setFixState}
+          state={fixState}
+          afterSchools={afterSchools}
+          setAfterSchools={setAfterSchools}
+        />
       )}
       {allSelect && <SelectSeason setAllSelect={setAllSelect} />}
     </S.AfterSchool>
