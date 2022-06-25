@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 type StlyedProps = {
   state: boolean;
+  name?: string;
 };
 
 type FilterProps = {
@@ -232,6 +233,8 @@ export const FilterElement = styled.div<StlyedProps>`
   width: 6em;
   padding: 7px 10px;
   border-radius: 23px;
+  cursor: pointer;
+  transition: 0.2s;
   background-color: ${({ state }) => (state ? "#A5A5FE" : "transparent")};
 `;
 
@@ -304,6 +307,6 @@ export const AllButton = styled.button<ButtonType>`
     top: 0;
     right: 100%;
     background: rgba(0, 0, 0, 0.1);
-    transition: 0.5s cubic-bezier(0.23, 0.56, 0.68, 0.38);
+    transition: 0.2s cubic-bezier(0.23, 0.56, 0.68, 0.38);
   }
 `;

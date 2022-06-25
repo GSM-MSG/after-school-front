@@ -1,7 +1,6 @@
 import * as S from "./styles";
 import * as SVG from "../../SVG";
 import { Dispatch, ReactElement, SetStateAction, useState } from "react";
-import Link from "next/link";
 
 export default function SelectButton({
   setCategory,
@@ -22,7 +21,7 @@ export default function SelectButton({
   //선택한 SVG인덱스 찾아주는 람수
   const Select = (select: number) => {
     if (list.length === newList.length) {
-      setNweList(list.filter((e, index) => index === select));
+      setNweList(list.filter((_, index) => index === select));
       setCategory(select);
     } else {
       setNweList(list);

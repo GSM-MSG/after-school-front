@@ -1,21 +1,39 @@
+import { NextPage } from "next";
 import * as S from "./styles";
 import { useState } from "react";
-import { userData } from "./DummyData";
-import { StuSearch } from "../StuSearch";
+import { ApplyUserType } from "../../types";
+import produce from "immer";
+import { toast } from "react-toastify";
+import checkQuery from "../../lib/checkQuery";
+import api from "../../lib/api";
+import { useRouter } from "next/router";
 
-export default function AdminStuList() {
-  //멤버 추가하기 모달 관리 state
-  const [searchTurn, setSearchTurn] = useState<boolean>(false);
+interface AdminStuListProps {
+  data: ApplyUserType[];
+}
 
-  type userDumyDataType = {
-    name: string;
-    grade: number;
-    class: number;
-    num: number;
-    img: string;
-    club: string;
-    role: string;
+const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
+  const [users, setUsers] = useState<ApplyUserType[]>(data);
+  const router = useRouter();
+
+  const onDelete = async (email: string) => {
+    try {
+      await checkQuery(async () =>
+        api.patch(`/afterSchool/users/${router.query.afterSchoolIdx}`)
+      );
+
+      setUsers(
+        produce(users, (draft) => {
+          draft = draft.filter((i) => i.email !== email);
+        })
+      );
+
+      toast.success("유저 삭제에 성공했습니다");
+    } catch (e) {
+      toast.error("유저 삭제에 실패했습니다");
+    }
   };
+
   return (
     <>
       <S.Wrapper>
@@ -28,30 +46,21 @@ export default function AdminStuList() {
         </S.DeleteInform>
         <S.ListContainer>
           <ul>
-            {userData.map((item: userDumyDataType, idx: number) => (
+            {users.map((item, idx) => (
               <S.ListWrapper key={idx}>
-                <img src={item.img} />
+                <img src={item.userImg} />
                 <div>
                   <p>{item.name}</p>
-                  <p>
-                    {item.grade +
-                      "학년 " +
-                      item.class +
-                      "반 " +
-                      item.num +
-                      "번"}
-                  </p>
+                  <p>{`${item.grade}학년 ${item.class_}반 ${item.num}번`}</p>
                 </div>
-                <button>삭제</button>
+                <button onClick={() => onDelete(item.email)}>삭제</button>
               </S.ListWrapper>
             ))}
           </ul>
         </S.ListContainer>
       </S.Wrapper>
-      <S.Inform>
-        <button onClick={() => setSearchTurn(true)}>멤버 추가하기</button>
-      </S.Inform>
-      {searchTurn && <StuSearch setSearchTurn={setSearchTurn} />}
     </>
   );
-}
+};
+
+export default AdminStuList;
