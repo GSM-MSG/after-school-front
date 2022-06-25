@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from "react";
+import React, { useState } from "react";
 import * as S from "./styles";
 import * as Type from "../../types/AfterSchoolType";
 import * as SVG from "../../SVG";
@@ -13,8 +13,9 @@ import checkQuery from "../../lib/checkQuery";
 import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { NextPage } from "next";
-import { FixAfterSchool } from "../../types";
+import { FixAfterSchool, WeekType } from "../../types";
 import produce from "immer";
+import { Week } from "../../lib/Week";
 
 interface AdminAfterSchoolProps {
   data: Type.PropListType[];
@@ -22,49 +23,12 @@ interface AdminAfterSchoolProps {
 
 const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   const [afterSchools, setAfterSchools] = useState<Type.PropListType[]>(data);
-
-  //요일 오브벡트 타입
-  type FilterDayType = {
-    day: "MON" | "TUE" | "WED";
-    check: boolean;
-  };
-  //학년 오브젝트 타입
-  type FilterGradeType = {
-    grade: number;
-    check: boolean;
-  };
   //선택한 버튼의 상태 관리
   const [category, setCategory] = useState<number>();
   //요일 오브젝트
-  const [day, setDay] = useState<FilterDayType[]>([
-    {
-      day: "MON",
-      check: false,
-    },
-    {
-      day: "TUE",
-      check: false,
-    },
-    {
-      day: "WED",
-      check: false,
-    },
-  ]);
+  const [day, setDay] = useState<WeekType | null>(null);
   //학년 오브젝트
-  const [grade, setGrade] = useState<FilterGradeType[]>([
-    {
-      grade: 1,
-      check: false,
-    },
-    {
-      grade: 2,
-      check: false,
-    },
-    {
-      grade: 3,
-      check: false,
-    },
-  ]);
+  const [grade, setGrade] = useState<1 | 2 | 3 | null>(null);
   //필터 모달 관리 state
   const [filter, setFilter] = useState<boolean>(false);
   //검색 값 관리 state
@@ -195,57 +159,9 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
       );
     }
   };
-  //날짜 오브젝트 생성 함수
-  const changeCheckDay = (e: MouseEvent) => {
-    const findCheckIndex: number = day.findIndex(
-      (element) =>
-        WeekKorean[element.day] + "요일" ===
-        (e.target as HTMLSpanElement).outerText
-    );
-    const newList = day.map((item, i) => {
-      if (i === findCheckIndex) {
-        const newItem = {
-          day: item.day,
-          check: !item.check ? true : false,
-        };
-        return newItem;
-      } else if (item.check === true) {
-        const newItem = {
-          day: item.day,
-          check: false,
-        };
-        return newItem;
-      } else {
-        return item;
-      }
-    });
-    setDay(newList);
-  };
-  //요일 변경 함수
-  const changeCheckGrade = (e: MouseEvent) => {
-    const findCheckIndex: number = grade.findIndex(
-      (element) =>
-        element.grade === parseInt((e.target as HTMLSpanElement).outerText)
-    );
-    const newList = grade.map((item, i) => {
-      if (i === findCheckIndex) {
-        const newItem = {
-          grade: item.grade,
-          check: !item.check ? true : false,
-        };
-        return newItem;
-      } else if (item.check === true) {
-        const newItem = {
-          grade: item.grade,
-          check: false,
-        };
-        return newItem;
-      } else {
-        return item;
-      }
-    });
-    setGrade(newList);
-  };
+
+  const onChangeGrade = (g: 1 | 2 | 3) => setGrade(grade === g ? null : g);
+  const onChangeWeek = (week: WeekType) => setDay(day === week ? null : week);
 
   return (
     <S.AfterSchool>
@@ -271,31 +187,28 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
         <S.FilterBox>
           <S.FilterList>
             <p>요일</p>
-            {day.map((e: FilterDayType, i) => {
-              return (
-                <S.FilterElement
-                  key={i}
-                  state={e.check}
-                  onClick={changeCheckDay}
-                >
-                  {WeekKorean[e.day] + "요일"}
-                </S.FilterElement>
-              );
-            })}
+            {Array(...Array(3)).map((_, i) => (
+              <S.FilterElement
+                key={i}
+                state={day === Week[i]}
+                onClick={() => onChangeWeek(Week[i] as WeekType)}
+              >
+                {WeekKorean[Week[i] as WeekType] + "요일"}
+              </S.FilterElement>
+            ))}
           </S.FilterList>
           <S.FilterList>
             <p>대상학년</p>
-            {grade.map((e: FilterGradeType, i) => {
-              return (
-                <S.FilterElement
-                  key={i}
-                  state={e.check}
-                  onClick={changeCheckGrade}
-                >
-                  {e.grade + "학년"}
-                </S.FilterElement>
-              );
-            })}
+            {Array(...Array(3)).map((_, i) => (
+              <S.FilterElement
+                key={i}
+                state={grade === i + 1}
+                name={`${i + 1}`}
+                onClick={() => onChangeGrade((i + 1) as 1 | 2 | 3)}
+              >
+                {i + 1}학년
+              </S.FilterElement>
+            ))}
           </S.FilterList>
         </S.FilterBox>
       )}
@@ -328,22 +241,26 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
           </S.AllButtonBox>
         )}
         <S.ScollBox>
-          {afterSchools.map((e: Type.PropListType, i) => {
-            return (
-              <S.Enrolment key={i}>
-                <div>
-                  <p>{e.title}</p>
-                  <p>
-                    {e.week.map((i, idx) =>
-                      idx === 0 ? WeekKorean[i] : `, ${WeekKorean[i]}`
-                    )}
-                  </p>
-                  <p>{e.grade}</p>
-                </div>
-                {makeSelectButton(e)}
-              </S.Enrolment>
-            );
-          })}
+          {afterSchools
+            .filter((i) => i.title.includes(search))
+            .filter((i) => (grade ? i.grade === grade : true))
+            .filter((i) => (day ? i.week.includes(day as WeekType) : true))
+            .map((e: Type.PropListType, i) => {
+              return (
+                <S.Enrolment key={i}>
+                  <div>
+                    <p>{e.title}</p>
+                    <p>
+                      {e.week.map((i, idx) =>
+                        idx === 0 ? WeekKorean[i] : `, ${WeekKorean[i]}`
+                      )}
+                    </p>
+                    <p>{e.grade}</p>
+                  </div>
+                  {makeSelectButton(e)}
+                </S.Enrolment>
+              );
+            })}
         </S.ScollBox>
       </S.AfterSchoolBox>
       <SelectButton setCategory={setCategory} />

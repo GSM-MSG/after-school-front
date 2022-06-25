@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 type StlyedProps = {
   state: boolean;
+  name?: string;
 };
 
 type FilterProps = {
