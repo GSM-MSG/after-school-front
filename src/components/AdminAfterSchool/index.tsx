@@ -221,14 +221,30 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
 
   useEffect(() => {
     if (!fix) {
-      setAfterSchools(
-        produce(afterSchools, (draft) => {
-          return draft.map((i) => {
-            if (i.id === fixState.id) return { ...i, ...fixState };
-            return { ...i };
-          });
-        })
-      );
+      (async () => {
+        try {
+          await checkQuery(async () =>
+            api.put(`/afterSchool?afterSchoolIdx=${fixState.id}`, {
+              ...fixState,
+              yearOf: new Date().getFullYear(),
+              id: undefined,
+            })
+          );
+
+          setAfterSchools(
+            produce(afterSchools, (draft) => {
+              return draft.map((i) => {
+                if (i.id === fixState.id) return { ...i, ...fixState };
+                return { ...i };
+              });
+            })
+          );
+
+          toast.success("방과후 수정에 성공했습니다");
+        } catch (e) {
+          toast.error("방과후 수정에 실패했습니다");
+        }
+      })();
     }
   }, [fix]);
 
