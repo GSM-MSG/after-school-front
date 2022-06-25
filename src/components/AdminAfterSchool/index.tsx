@@ -85,6 +85,8 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   //신청 받기 마감 모달 관리 state
   const [allSelect, setAllSelect] = useState(false);
 
+  const [type, setType] = useState<"open" | "close" | null>(null);
+
   const router = useRouter();
 
   const deleteAfterSchool = async (id: number) => {
@@ -305,11 +307,22 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
         </S.CurseList>
         {category === 3 && (
           <S.AllButtonBox>
-            <S.AllButton color="blue" onClick={() => setAllSelect(true)}>
+            <S.AllButton
+              color="blue"
+              onClick={() => {
+                setAllSelect(true);
+                setType("open");
+              }}
+            >
               전체 신청받기
             </S.AllButton>
-            <S.AllButton color="red" onClick={() => setAllSelect(true)}>
-              <SVG.UnderTryAngle />
+            <S.AllButton
+              color="red"
+              onClick={() => {
+                setAllSelect(true);
+                setType("close");
+              }}
+            >
               전체 신청마감
             </S.AllButton>
           </S.AllButtonBox>
@@ -344,7 +357,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
           setAfterSchools={setAfterSchools}
         />
       )}
-      {allSelect && <SelectSeason setAllSelect={setAllSelect} />}
+      {allSelect && <SelectSeason setAllSelect={setAllSelect} type={type} />}
     </S.AfterSchool>
   );
 };
