@@ -8,3 +8,4 @@ export * from "./MyPageType";
 export * from "./AfterSchoolType";
 export * from "./WeekType";
 export * from "./FixAfterSchool";
+export * from "./ApplyUserType";
