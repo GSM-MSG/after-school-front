@@ -13,6 +13,8 @@ import checkQuery from "../../lib/checkQuery";
 import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { NextPage } from "next";
+import { FixAfterSchool } from "../../types";
+import produce from "immer";
 
 interface AdminAfterSchoolProps {
   data: Type.PropListType[];
@@ -67,35 +69,23 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   const [filter, setFilter] = useState<boolean>(false);
   //검색 값 관리 state
   const [search, setSearch] = useState<string>("");
-  //검색||필터가 적용된 리스트
-  const [afterList, setAfterList] = useState<Type.PropListType[]>([]);
   //수정하기 모달 관리 state
   const [fix, setFix] = useState(false);
   //방과후ㅜ생성하기 모달 관리 state
   const [create, setCreate] = useState(false);
   //수정할 리스트 정보 관리 state
-  const [fixState, setFixState] = useState<Type.PropListType>({
+  const [fixState, setFixState] = useState<FixAfterSchool>({
     id: 0,
     title: "",
     week: ["MON"],
-    grade: 0,
-    isOpend: true,
-    isApplied: true,
-    isEnabled: true,
+    grade: 1,
+    teacher: "",
+    season: "FIRST",
   });
   //신청 받기 마감 모달 관리 state
   const [allSelect, setAllSelect] = useState(false);
 
   const router = useRouter();
-
-  //검색 리스트 생성 함수
-  const ChangeAfterList = () => {
-    if (search === "") {
-      return afterSchools;
-    } else {
-      return afterSchools.filter((e) => e.title.includes(search));
-    }
-  };
 
   const deleteAfterSchool = async (id: number) => {
     try {
@@ -111,7 +101,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     }
   };
 
-  const editAfterSchool = async (e: Type.PropListType) => {
+  const editAfterSchool = async (e: FixAfterSchool) => {
     try {
       setFix(true);
       setFixState(e);
@@ -128,7 +118,19 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   const makeSelectButton = (e: Type.PropListType) => {
     if (category === 0) {
       return (
-        <S.SelectButton onClick={() => editAfterSchool(e)} color={"blue"}>
+        <S.SelectButton
+          onClick={() =>
+            editAfterSchool({
+              id: e.id,
+              title: e.title,
+              week: e.week,
+              grade: e.grade,
+              teacher: e.teacher,
+              season: e.season,
+            })
+          }
+          color={"blue"}
+        >
           수정하기
         </S.SelectButton>
       );
@@ -216,38 +218,19 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     });
     setGrade(newList);
   };
-  //새 필터 생성 함수
-  const MakeFilter = () => {
-    const CheckDay = day.filter((e) => e.check === true);
-    const CheckGrade = grade.filter((e) => e.check === true);
 
-    let newList: Type.PropListType[] = [];
-
-    if (CheckDay.length === 0 && CheckGrade.length === 0) {
-      setAfterList(ChangeAfterList());
-    } else if (CheckDay.length === 0 && CheckGrade.length === 1) {
-      newList = afterSchools.filter((e) => e.grade === CheckGrade[0].grade);
-      setAfterList(newList);
-    } else if (CheckDay.length === 1 && CheckGrade.length === 0) {
-      newList = afterSchools.filter((e) => e.week.includes(CheckDay[0].day));
-      setAfterList(newList);
-    } else if (CheckDay.length === 1 && CheckGrade.length === 1) {
-      newList = afterSchools.filter(
-        (e) =>
-          e.week.includes(CheckDay[0].day) && e.grade === CheckGrade[0].grade
+  useEffect(() => {
+    if (!fix) {
+      setAfterSchools(
+        produce(afterSchools, (draft) => {
+          return draft.map((i) => {
+            if (i.id === fixState.id) return { ...i, ...fixState };
+            return { ...i };
+          });
+        })
       );
-      setAfterList(newList);
     }
-  };
-
-  //실시간검색 리스트 생성
-  useEffect(() => {
-    setAfterList(ChangeAfterList());
-  }, [search]);
-  //필터 변경체크
-  useEffect(() => {
-    MakeFilter();
-  }, [grade, day]);
+  }, [fix]);
 
   return (
     <S.AfterSchool>
@@ -262,7 +245,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
             setSearch(e.target.value);
           }}
         />
-        <i onClick={ChangeAfterList}>
+        <i>
           <SVG.SearchIcon />
         </i>
         <i onClick={() => setFilter(!filter)}>
@@ -319,12 +302,16 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
           </S.AllButtonBox>
         )}
         <S.ScollBox>
-          {afterList.map((e: Type.PropListType, i) => {
+          {afterSchools.map((e: Type.PropListType, i) => {
             return (
               <S.Enrolment key={i}>
                 <div>
                   <p>{e.title}</p>
-                  <p>{WeekKorean[e.week[0]]}</p>
+                  <p>
+                    {e.week.map((i, idx) =>
+                      idx === 0 ? WeekKorean[i] : `, ${WeekKorean[i]}`
+                    )}
+                  </p>
                   <p>{e.grade}</p>
                 </div>
                 {makeSelectButton(e)}
@@ -335,7 +322,9 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
       </S.AfterSchoolBox>
       <SelectButton setCategory={setCategory} />
       {create && <CreateAfterSchool setCreate={setCreate} />}
-      {fix && <AdminFix setFix={setFix} state={fixState} />}
+      {fix && (
+        <AdminFix setFix={setFix} setState={setFixState} state={fixState} />
+      )}
       {allSelect && <SelectSeason setAllSelect={setAllSelect} />}
     </S.AfterSchool>
   );
