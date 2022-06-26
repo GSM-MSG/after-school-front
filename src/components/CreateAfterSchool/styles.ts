@@ -12,7 +12,6 @@ export const bg = styled.div`
 
 export const box = styled.div`
   width: 55rem;
-  height: 50rem;
   background: #1e1e1c;
   position: fixed;
   top: 50%;
@@ -22,21 +21,22 @@ export const box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 1rem;
+  padding: 2rem 0;
+
   @media (max-width: 75rem) {
     width: 73vw;
   }
 `;
 
-export const title = styled.h1`
-  margin-top: 3rem;
-`;
+export const title = styled.h1``;
 
 export const afterSchoolType = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 2rem;
+
   h2 {
     font-size: 1.2rem;
     font-weight: 400;
@@ -84,7 +84,7 @@ export const lectureTitle = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+
   h2 {
     font-size: 1.2rem;
     font-weight: 400;
@@ -108,7 +108,6 @@ export const dayAndGrade = styled.div`
   width: 70%;
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
 `;
 
 export const day = styled.div`
@@ -142,7 +141,7 @@ export const checkOverlap = styled.div`
 `;
 
 export const submit = styled.input`
-  margin-top: 6rem;
+  margin-top: 4rem;
   width: 60%;
   height: 4rem;
   border-radius: 0.5rem;
