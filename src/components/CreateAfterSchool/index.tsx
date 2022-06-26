@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
 
 export function CreateAfterSchool({
@@ -8,39 +9,74 @@ export function CreateAfterSchool({
 }) {
   const [afterSchool, setafterSchool] = useState<string>("Normal");
   const [day, setDay] = useState<string[]>(["MON"]);
-  const [grade, setGrade] = useState<string[]>(["1"]);
+  const [grade, setGrade] = useState<number[]>([1]);
   const [title, setTitle] = useState<string>("");
-  const [dayOverlap, setDayOverlap] = useState(false);
-  const [gradeOverlap, setGradeOverlap] = useState(false);
+  const [season, setSeason] = useState<SeasonType>("FIRST");
 
   const ChangeAfter = (e: React.MouseEvent) =>
     setafterSchool((e.target as HTMLButtonElement).name);
-  const ChangeDay = (e: React.MouseEvent) => {
-    if (dayOverlap) {
-      if (day.length === 2) {
-        day.shift();
-      }
-      setDay([...day, (e.target as HTMLButtonElement).name]);
-    } else {
-      setDay([(e.target as HTMLButtonElement).name]);
-    }
+
+  const ChangeDay = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const name = `${e.currentTarget.getAttribute("name")}`;
+
+    if (day.includes(name) && day.length <= 1) return;
+    if (day.includes(name)) setDay(day.filter((i) => i !== name));
+    else setDay([...day, name]);
   };
 
-  const ChangeGrade = (e: React.MouseEvent) => {
-    if (gradeOverlap) {
-      if (grade.length === 2) {
-        grade.shift();
-      }
-      setGrade([...grade, (e.target as HTMLButtonElement).name]);
-    } else {
-      setGrade([(e.target as HTMLButtonElement).name]);
-    }
+  const ChangeGrade = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const name = Number(e.currentTarget.getAttribute("name"));
+    if (!name) return;
+
+    if (grade.includes(name) && grade.length <= 1) return;
+    if (grade.includes(name)) setGrade(grade.filter((i) => i !== name));
+    else setGrade([...grade, name]);
+  };
+
+  const onChageSeason = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const name = e.currentTarget.getAttribute("name") as SeasonType;
+    setSeason(name);
   };
 
   return (
     <>
       <S.box>
         <S.title>방과후 개설</S.title>
+        <S.afterSchoolType>
+          <h2>시즌</h2>
+          <div>
+            <S.ChangrButton
+              onClick={onChageSeason}
+              active={season === "FIRST"}
+              position="left"
+              name="FIRST"
+            >
+              1학기
+            </S.ChangrButton>
+            <S.ChangrButton
+              onClick={onChageSeason}
+              active={season === "SUMMER"}
+              name="SUMMER"
+            >
+              여름방학
+            </S.ChangrButton>
+            <S.ChangrButton
+              onClick={onChageSeason}
+              active={season === "SECOND"}
+              name="SECOND"
+            >
+              2학기
+            </S.ChangrButton>
+            <S.ChangrButton
+              onClick={onChageSeason}
+              active={season === "WINTER"}
+              position="right"
+              name="WINTER"
+            >
+              겨울방학
+            </S.ChangrButton>
+          </div>
+        </S.afterSchoolType>
         <S.afterSchoolType>
           <h2>방과후 종류</h2>
           <div>
@@ -76,17 +112,6 @@ export function CreateAfterSchool({
           <S.day>
             <S.checkOverlap>
               <h2>강의요일</h2>
-              <label htmlFor="day">
-                중복
-                <input
-                  id="day"
-                  type="checkbox"
-                  checked={dayOverlap}
-                  onChange={() => {
-                    setDayOverlap(!dayOverlap);
-                  }}
-                />
-              </label>
             </S.checkOverlap>
             <div>
               <S.ChangrButton
@@ -117,22 +142,11 @@ export function CreateAfterSchool({
           <S.grade>
             <S.checkOverlap>
               <h2>대상학년</h2>
-              <label htmlFor="grade">
-                중복
-                <input
-                  id="grade"
-                  type="checkbox"
-                  checked={gradeOverlap}
-                  onChange={() => {
-                    setGradeOverlap(!gradeOverlap);
-                  }}
-                />
-              </label>
             </S.checkOverlap>
             <div>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={grade.includes("1")}
+                active={grade.includes(1)}
                 position="left"
                 name="1"
               >
@@ -140,14 +154,14 @@ export function CreateAfterSchool({
               </S.ChangrButton>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={grade.includes("2")}
+                active={grade.includes(2)}
                 name="2"
               >
                 2
               </S.ChangrButton>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={grade.includes("3")}
+                active={grade.includes(3)}
                 position="right"
                 name="3"
               >
