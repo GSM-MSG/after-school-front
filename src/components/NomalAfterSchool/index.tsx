@@ -96,14 +96,8 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                   <S.Enrolment key={i.id}>
                     <div>
                       <p>{i.title}</p>
-                      <p>
-                        {i.week.map((week, i) =>
-                          i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
-                        )}
-                      </p>
-                      <p>
-                        {i.grade.map((i, idx) => (idx === 0 ? i : `, ${i}`))}
-                      </p>
+                      <p>{i.week.map((week) => WeekKorean[week]).join(", ")}</p>
+                      <p>{i.grade.join(", ")}</p>
                     </div>
                     {i.isEnabled && (
                       <S.SelectButton

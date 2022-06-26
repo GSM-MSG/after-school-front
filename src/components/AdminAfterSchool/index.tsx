@@ -250,12 +250,8 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
                 <S.Enrolment key={i}>
                   <div>
                     <p>{e.title}</p>
-                    <p>
-                      {e.week.map((i, idx) =>
-                        idx === 0 ? WeekKorean[i] : `, ${WeekKorean[i]}`
-                      )}
-                    </p>
-                    <p>{e.grade.map((i, idx) => (idx === 0 ? i : `, ${i}`))}</p>
+                    <p>{e.week.map((i) => WeekKorean[i]).join(", ")}</p>
+                    <p>{e.grade.join(", ")}</p>
                   </div>
                   {makeSelectButton(e)}
                 </S.Enrolment>
