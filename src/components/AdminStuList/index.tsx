@@ -48,7 +48,7 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
           <ul>
             {users.map((item, idx) => (
               <S.ListWrapper key={idx}>
-                <img src={item.userImg} />
+                <S.UserImg src={item.userImg} />
                 <div>
                   <p>{item.name}</p>
                   <p>{`${item.grade}학년 ${item.class_}반 ${item.num}번`}</p>

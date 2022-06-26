@@ -1,6 +1,6 @@
 import React, { MouseEvent, useState } from "react";
 import * as S from "./style";
-import { PropListType, WeekType } from "../../types";
+import { GradeType, PropListType, WeekType } from "../../types";
 import { NextPage } from "next";
 import { WeekKorean } from "../../lib/WeekKorean";
 import produce from "immer";
@@ -15,13 +15,13 @@ interface NomalAfterSchoolProps {
 const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
   const [afterSchools, setAfterSchools] = useState<PropListType[]>(data);
   const [week, setWeek] = useState<WeekType | null>(null);
-  const [grade, setGrade] = useState<number | null>(null);
+  const [grade, setGrade] = useState<GradeType | null>(null);
 
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
     const value = e.currentTarget.getAttribute("name") as WeekType;
 
     if (Number(value)) {
-      setGrade(Number(value) === grade ? null : Number(value));
+      setGrade(Number(value) === grade ? null : (Number(value) as GradeType));
     } else setWeek(value === week ? null : value);
   };
 
@@ -88,7 +88,7 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
             })
             .filter((i) => {
               if (!grade) return i;
-              return i.grade === grade;
+              return i.grade.includes(grade);
             })
             .map(
               (i) =>
@@ -101,7 +101,9 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                           i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
                         )}
                       </p>
-                      <p>{i.grade}</p>
+                      <p>
+                        {i.grade.map((i, idx) => (idx === 0 ? i : `, ${i}`))}
+                      </p>
                     </div>
                     {i.isEnabled && (
                       <S.SelectButton

@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 interface AfterSchoolProps {
-  data: PropListType;
+  data: PropListType[];
 }
 
 const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {

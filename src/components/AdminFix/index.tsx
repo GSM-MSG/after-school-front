@@ -35,6 +35,7 @@ export function AdminFix({
     const week = e.currentTarget.getAttribute("name") as WeekType;
     setState(
       produce(state, (draft) => {
+        if (draft.week.includes(week) && draft.week.length <= 1) return;
         if (draft.week.includes(week))
           draft.week = draft.week.filter((i) => i !== week);
         else draft.week.push(week);
@@ -46,10 +47,14 @@ export function AdminFix({
     const grade = Number(e.currentTarget.getAttribute("name")) as 1 | 2 | 3;
     if (!grade) return;
 
-    setState({
-      ...state,
-      grade,
-    });
+    setState(
+      produce(state, (draft) => {
+        if (draft.grade.includes(grade) && draft.grade.length <= 1) return;
+        if (draft.grade.includes(grade))
+          draft.grade = draft.grade.filter((i) => i !== grade);
+        else draft.grade.push(grade);
+      })
+    );
   };
 
   const ChangeSeason = (e: MouseEvent<HTMLButtonElement>) => {
@@ -185,7 +190,7 @@ export function AdminFix({
             <div>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={state.grade === 1}
+                active={state.grade.includes(1)}
                 position="left"
                 name="1"
               >
@@ -193,14 +198,14 @@ export function AdminFix({
               </S.ChangrButton>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={state.grade === 2}
+                active={state.grade.includes(2)}
                 name="2"
               >
                 2
               </S.ChangrButton>
               <S.ChangrButton
                 onClick={ChangeGrade}
-                active={state.grade === 3}
+                active={state.grade.includes(3)}
                 position="right"
                 name="3"
               >

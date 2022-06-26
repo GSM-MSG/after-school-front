@@ -42,7 +42,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     id: 0,
     title: "",
     week: ["MON"],
-    grade: 1,
+    grade: [1],
     teacher: "",
     season: "FIRST",
   });
@@ -243,7 +243,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
         <S.ScollBox>
           {afterSchools
             .filter((i) => i.title.includes(search))
-            .filter((i) => (grade ? i.grade === grade : true))
+            .filter((i) => (grade ? i.grade.includes(grade) : true))
             .filter((i) => (day ? i.week.includes(day as WeekType) : true))
             .map((e: Type.PropListType, i) => {
               return (
@@ -255,7 +255,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
                         idx === 0 ? WeekKorean[i] : `, ${WeekKorean[i]}`
                       )}
                     </p>
-                    <p>{e.grade}</p>
+                    <p>{e.grade.map((i, idx) => (idx === 0 ? i : `, ${i}`))}</p>
                   </div>
                   {makeSelectButton(e)}
                 </S.Enrolment>

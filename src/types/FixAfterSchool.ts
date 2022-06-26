@@ -1,3 +1,4 @@
+import { GradeType } from "./GradeType";
 import { SeasonType } from "./SeasonType";
 import { WeekType } from "./WeekType";
 
@@ -6,6 +7,6 @@ export interface FixAfterSchool {
   id: number;
   title: string;
   week: WeekType[];
-  grade: 1 | 2 | 3;
+  grade: GradeType[];
   teacher: string;
 }
