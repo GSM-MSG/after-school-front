@@ -1,6 +1,6 @@
 import React, { MouseEvent, useState } from "react";
 import * as S from "./style";
-import { PropListType, WeekType } from "../../types";
+import { GradeType, PropListType, WeekType } from "../../types";
 import { NextPage } from "next";
 import { WeekKorean } from "../../lib/WeekKorean";
 import produce from "immer";
@@ -15,13 +15,13 @@ interface NomalAfterSchoolProps {
 const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
   const [afterSchools, setAfterSchools] = useState<PropListType[]>(data);
   const [week, setWeek] = useState<WeekType | null>(null);
-  const [grade, setGrade] = useState<number | null>(null);
+  const [grade, setGrade] = useState<GradeType | null>(null);
 
   const onClick = (e: MouseEvent<HTMLDivElement>) => {
     const value = e.currentTarget.getAttribute("name") as WeekType;
 
     if (Number(value)) {
-      setGrade(Number(value) === grade ? null : Number(value));
+      setGrade(Number(value) === grade ? null : (Number(value) as GradeType));
     } else setWeek(value === week ? null : value);
   };
 
@@ -88,7 +88,7 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
             })
             .filter((i) => {
               if (!grade) return i;
-              return i.grade === grade;
+              return i.grade.includes(grade);
             })
             .map(
               (i) =>
@@ -96,12 +96,8 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                   <S.Enrolment key={i.id}>
                     <div>
                       <p>{i.title}</p>
-                      <p>
-                        {i.week.map((week, i) =>
-                          i === 0 ? WeekKorean[week] : `, ${WeekKorean[week]}`
-                        )}
-                      </p>
-                      <p>{i.grade}</p>
+                      <p>{i.week.map((week) => WeekKorean[week]).join(", ")}</p>
+                      <p>{i.grade.join(", ")}</p>
                     </div>
                     {i.isEnabled && (
                       <S.SelectButton

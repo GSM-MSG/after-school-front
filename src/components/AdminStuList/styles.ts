@@ -82,11 +82,6 @@ export const ListWrapper = styled.li`
     width: 50vw;
   }
 
-  img {
-    height: 75%;
-    border-radius: 100%;
-  }
-
   div {
     display: flex;
     flex-direction: column;
@@ -112,6 +107,12 @@ export const ListWrapper = styled.li`
     line-height: 27px;
     cursor: pointer;
   }
+`;
+
+export const UserImg = styled.img`
+  object-fit: corver;
+  height: 75%;
+  border-radius: 100%;
 `;
 
 export const Inform = styled.div`

@@ -1,9 +1,10 @@
 import { SeasonType } from "./SeasonType";
+import { GradeType } from "./GradeType";
 
 export type UserState = {
   id: number;
   title?: string;
-  grade: 1 | 2 | 3;
+  grade: GradeType[];
   week: weekType[];
   isApplied: boolean;
 };
@@ -12,7 +13,7 @@ export type PropListType = {
   id: number;
   title: string;
   week: weekType[];
-  grade: 1 | 2 | 3;
+  grade: GradeType[];
   season: SeasonType;
   teacher: string;
   isOpend: boolean;
