@@ -1,4 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "react-toastify";
+import api from "../../lib/api";
+import checkQuery from "../../lib/checkQuery";
 import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
 
@@ -12,6 +15,7 @@ export function CreateAfterSchool({
   const [grade, setGrade] = useState<number[]>([1]);
   const [title, setTitle] = useState<string>("");
   const [season, setSeason] = useState<SeasonType>("FIRST");
+  const [teacher, setTeacher] = useState<string>("");
 
   const ChangeAfter = (e: React.MouseEvent) =>
     setafterSchool((e.target as HTMLButtonElement).name);
@@ -36,6 +40,27 @@ export function CreateAfterSchool({
   const onChageSeason = (e: React.MouseEvent<HTMLButtonElement>) => {
     const name = e.currentTarget.getAttribute("name") as SeasonType;
     setSeason(name);
+  };
+
+  const onChangeTeacher = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTeacher(e.target.value);
+
+  const onSubmit = async () => {
+    try {
+      await checkQuery(async () =>
+        api.post("/afterSchool", {
+          title,
+          grade,
+          dayOfWeek: day,
+          teacher,
+          season,
+          yearOf: new Date().getFullYear(),
+        })
+      );
+      setCreate(false);
+    } catch (e) {
+      toast.error("동아리 개설에 실패했습니다");
+    }
   };
 
   return (
@@ -170,11 +195,11 @@ export function CreateAfterSchool({
             </div>
           </S.grade>
         </S.dayAndGrade>
-        <S.submit
-          onClick={() => setCreate(false)}
-          type="submit"
-          value="개설하기"
-        />
+        <S.lectureTitle>
+          <h2>담당 선생님</h2>
+          <S.lectureInput onChange={onChangeTeacher} value={teacher} />
+        </S.lectureTitle>
+        <S.submit onClick={onSubmit} type="submit" value="개설하기" />
       </S.box>
       <S.bg onClick={() => setCreate(false)} />
     </>

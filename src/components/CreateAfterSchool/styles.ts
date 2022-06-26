@@ -12,7 +12,6 @@ export const bg = styled.div`
 
 export const box = styled.div`
   width: 55rem;
-  height: 50rem;
   background: #1e1e1c;
   position: fixed;
   top: 50%;
@@ -23,15 +22,14 @@ export const box = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 1rem;
+  padding: 2rem 0;
 
   @media (max-width: 75rem) {
     width: 73vw;
   }
 `;
 
-export const title = styled.h1`
-  margin-top: 3rem;
-`;
+export const title = styled.h1``;
 
 export const afterSchoolType = styled.div`
   width: 70%;
