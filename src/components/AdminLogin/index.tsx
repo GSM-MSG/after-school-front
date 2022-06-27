@@ -1,11 +1,32 @@
 import * as S from "./styles";
 import * as SVG from "../../SVG";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import api from "../../lib/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+
+interface HandlerType {
+  userId: string;
+  password: string;
+}
 
 export default function AdminLogin() {
-  const { register, handleSubmit } = useForm();
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<HandlerType>();
 
-  const onSubmit = async (data: any) => {};
+  const onSubmit: SubmitHandler<HandlerType> = async (data) => {
+    try {
+      await api.post("/teacher", {
+        ...data,
+      });
+
+      router.push("/admin/afterSchool");
+
+      toast.success("로그인 성공");
+    } catch (e) {
+      toast.error("로그인 실패");
+    }
+  };
 
   return (
     <S.Wrapper>
@@ -21,15 +42,14 @@ export default function AdminLogin() {
         <SVG.LogoBlack />
         <S.LoginTitle>Sign in</S.LoginTitle>
         <S.LoginInput
-          {...register("email", { required: true })}
-          placeholder="이메일을 입력하세요"
+          {...register("userId", { required: true })}
+          placeholder="아이디을 입력하세요"
           autoComplete="off"
         />
         <S.LoginInput
           type="password"
           {...register("password", { required: true })}
           placeholder="비밀번호를 입력하세요"
-          autoCapitalize="off"
         />
         <S.LoginButton type="submit">로그인</S.LoginButton>
       </S.LoginWrapper>
