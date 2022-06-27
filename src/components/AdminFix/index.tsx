@@ -6,7 +6,7 @@ import React, {
   SetStateAction,
 } from "react";
 import { toast } from "react-toastify";
-import api from "../../lib/api";
+import admin from "../../lib/admin";
 import checkQuery from "../../lib/checkQuery";
 import { FixAfterSchool, PropListType, WeekType } from "../../types";
 import { SeasonType } from "../../types/SeasonType";
@@ -82,7 +82,7 @@ export function AdminFix({
     }
     try {
       await checkQuery(async () =>
-        api.put(`/afterSchool/${state.id}`, {
+        admin.put(`/afterSchool/${state.id}`, {
           ...state,
           yearOf: new Date().getFullYear(),
           id: undefined,

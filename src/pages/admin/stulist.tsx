@@ -3,16 +3,31 @@ import { useState } from "react";
 import AdminStuList from "../../components/AdminStuList";
 import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Header from "../../components/Header";
-import { userData } from "../../components/AdminStuList/DummyData";
 import { ApplyUserType } from "../../types";
+import userCheck from "../../lib/userCheck";
+import admin from "../../lib/admin";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log(ctx.query);
-  return {
-    props: {
-      data: userData,
-    },
-  };
+  try {
+    const { cookies, accessToken } = await userCheck(ctx);
+
+    const { data } = await admin.get(`/users/${ctx.query.afterSchoolIdx}`, {
+      headers: { cookies: `accessToken=${accessToken}` },
+    });
+
+    if (cookies) ctx.res.setHeader("set-cookie", cookies);
+
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {},
+      redirect: { destination: "/login" },
+    };
+  }
 };
 
 interface StulistProps {
