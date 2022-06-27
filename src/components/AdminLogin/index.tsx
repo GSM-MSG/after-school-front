@@ -1,9 +1,9 @@
 import * as S from "./styles";
 import * as SVG from "../../SVG";
 import { SubmitHandler, useForm } from "react-hook-form";
-import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import admin from "../../lib/admin";
 
 interface HandlerType {
   userId: string;
@@ -16,7 +16,7 @@ export default function AdminLogin() {
 
   const onSubmit: SubmitHandler<HandlerType> = async (data) => {
     try {
-      await api.post("/teacher", {
+      await admin.post("/teacher", {
         ...data,
       });
 

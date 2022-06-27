@@ -5,8 +5,8 @@ import { ApplyUserType } from "../../types";
 import produce from "immer";
 import { toast } from "react-toastify";
 import checkQuery from "../../lib/checkQuery";
-import api from "../../lib/api";
 import { useRouter } from "next/router";
+import admin from "../../lib/admin";
 
 interface AdminStuListProps {
   data: ApplyUserType[];
@@ -19,7 +19,7 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
   const onDelete = async (email: string) => {
     try {
       await checkQuery(async () =>
-        api.patch(`/afterSchool/users/${router.query.afterSchoolIdx}`)
+        admin.patch(`/afterSchool/users/${router.query.afterSchoolIdx}`)
       );
 
       setUsers(

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
-import api from "../../lib/api";
+import admin from "../../lib/admin";
 import checkQuery from "../../lib/checkQuery";
 import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
@@ -48,7 +48,7 @@ export function CreateAfterSchool({
   const onSubmit = async () => {
     try {
       await checkQuery(async () =>
-        api.post("/afterSchool", {
+        admin.post("/afterSchool", {
           title,
           grade,
           dayOfWeek: day,

@@ -5,13 +5,13 @@ import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Header from "../../components/Header";
 import { PropListType } from "../../types";
 import userCheck from "../../lib/userCheck";
-import api from "../../lib/api";
+import admin from "../../lib/admin";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const { cookies, accessToken } = await userCheck(ctx);
 
-    const { data } = await api.get("/afterschool", {
+    const { data } = await admin.get("/afterschool", {
       headers: { cookies: `accessToken=${accessToken}` },
     });
 

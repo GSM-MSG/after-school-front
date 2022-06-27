@@ -10,12 +10,12 @@ import SelectSeason from "../../components/SelectSeason";
 import { useRouter } from "next/router";
 import { WeekKorean } from "../../lib/WeekKorean";
 import checkQuery from "../../lib/checkQuery";
-import api from "../../lib/api";
 import { toast } from "react-toastify";
 import { NextPage } from "next";
 import { FixAfterSchool, WeekType } from "../../types";
 import produce from "immer";
 import { Week } from "../../lib/Week";
+import admin from "../../lib/admin";
 
 interface AdminAfterSchoolProps {
   data: Type.PropListType[];
@@ -55,7 +55,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
 
   const deleteAfterSchool = async (id: number) => {
     try {
-      await checkQuery(async () => api.delete(`afterSchool/${id}`));
+      await checkQuery(async () => admin.delete(`afterSchool/${id}`));
 
       setAfterSchools(afterSchools.filter((i) => i.id !== id));
 
@@ -75,7 +75,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     type: "open" | "close"
   ) => {
     try {
-      await checkQuery(async () => api.put(`afterSchool/${type}/${id}`));
+      await checkQuery(async () => admin.put(`afterSchool/${type}/${id}`));
 
       setAfterSchools(
         produce(afterSchools, (draft) => {

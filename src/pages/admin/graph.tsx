@@ -3,7 +3,7 @@ import { useState } from "react";
 import AdminGraph from "../../components/AdminGraph";
 import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Header from "../../components/Header";
-import api from "../../lib/api";
+import admin from "../../lib/admin";
 import userCheck from "../../lib/userCheck";
 import { ClubStatistics } from "../../types";
 
@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const { cookies, accessToken } = await userCheck(ctx);
 
-    const { data } = await api.get("/afterschool/statistics", {
+    const { data } = await admin.get("/afterschool/statistics", {
       headers: { cookies: `accessToken=${accessToken}` },
     });
 
