@@ -1,34 +1,30 @@
 import { useEffect, useState } from "react";
 import * as S from "./styles";
 import * as SVG from "../../SVG";
-import { clubData } from "./DummyData";
+import { WeekKorean } from "../../lib/WeekKorean";
+import { ClubStatistics, WeekType } from "../../types";
+import { NextPage } from "next";
 
-export default function AdminGraph() {
-  const [maxvalue, setMaxValue] = useState<number>(0);
+interface AdminGraphProps {
+  clubData: {
+    total: number;
+    afterSchools: ClubStatistics[];
+  };
+}
+
+const AdminGraph: NextPage<AdminGraphProps> = ({ clubData }) => {
   const [value, setValue] = useState<number>(0);
   const speed: number = 10;
-  const [week, setWeek] = useState<string>("MON");
-  const [listActive, setListActive] = useState<string>("");
+  const [week, setWeek] = useState<WeekType>("MON");
+  const [listActive, setListActive] = useState<number>();
   const [clubName, setClubName] = useState<string>("");
   const [attend, setAttend] = useState<number>(0);
   const [attendValue, setAttendValue] = useState<number>(0);
 
-  const changeWeek = (e: string) => {
-    switch (e) {
-      case "MON":
-        return "월";
-      case "TUE":
-        return "화";
-      case "WED":
-        return "수";
-      default:
-        console.error("Week Error");
-        break;
-    }
-  };
   const MakePercent = (e: number) => Math.floor((e / 73) * 100);
+
   useEffect(() => {
-    if (value < maxvalue) {
+    if (value < attend) {
       setTimeout(() => {
         setValue(value + 1);
       }, speed);
@@ -38,7 +34,7 @@ export default function AdminGraph() {
         setAttendValue(attendValue + 1);
       }, speed);
     }
-  }, [value, maxvalue, attendValue, attend]);
+  }, [value, attendValue, attend]);
 
   return (
     <S.Wrapper>
@@ -52,7 +48,7 @@ export default function AdminGraph() {
           <S.Layout>
             <S.Progress value={value} append={attendValue} />
           </S.Layout>
-          <p>총75명</p>
+          <p>총{clubData.total}명</p>
           <S.GraphInformBox>
             <S.GraphInform color="#4C53FF">신청자</S.GraphInform>
             <S.GraphInform color="#FFFFFF">비 신청자</S.GraphInform>
@@ -75,30 +71,29 @@ export default function AdminGraph() {
             <span>요일</span>
             <span>신청인원수</span>
             <span>통계</span>
-            <span>명단</span>
+            <span>대상학년</span>
           </S.ListTitle>
           <S.ListBox>
-            {clubData
-              .filter((e) => e.day === week)
-              .map((e, index) => {
+            {clubData.afterSchools
+              .filter((e) => e.week.includes(week))
+              .map((e) => {
                 return (
                   <S.List
-                    key={index}
+                    key={e.afterSchoolIdx}
                     onClick={() => {
-                      setMaxValue(MakePercent(e.attend));
                       setValue(0);
-                      setListActive(e.club);
-                      setClubName(e.club);
+                      setListActive(e.afterSchoolIdx);
+                      setClubName(e.title);
                       setAttend(e.attend);
                       setAttendValue(0);
                     }}
-                    active={listActive === e.club && week === e.day}
+                    active={listActive === e.afterSchoolIdx}
                   >
-                    <span>{e.club}</span>
-                    <span>{changeWeek(e.day)}</span>
+                    <span>{e.title}</span>
+                    <span>{e.week.map((i) => WeekKorean[i]).join(", ")}</span>
                     <span>{e.attend}</span>
                     <span>{MakePercent(e.attend)}%</span>
-                    <span></span>
+                    <span>{e.grade.join(", ")}학년</span>
                   </S.List>
                 );
               })}
@@ -107,4 +102,6 @@ export default function AdminGraph() {
       </S.GraphWrapper>
     </S.Wrapper>
   );
-}
+};
+
+export default AdminGraph;
