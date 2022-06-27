@@ -1,20 +1,33 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
 import AdminGraph from "../../components/AdminGraph";
-import { clubData } from "../../components/AdminGraph/DummyData";
 import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Header from "../../components/Header";
+import api from "../../lib/api";
+import userCheck from "../../lib/userCheck";
 import { ClubStatistics } from "../../types";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {
-      clubData: {
-        total: 70,
-        afterSchools: clubData,
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const { cookies, accessToken } = await userCheck(ctx);
+
+    const { data } = await api.get("/afterschool/statistics", {
+      headers: { cookies: `accessToken=${accessToken}` },
+    });
+
+    if (cookies) ctx.res.setHeader("set-cookie", cookies);
+
+    return {
+      props: {
+        clubData: data,
       },
-    },
-  };
+    };
+  } catch (e) {
+    return {
+      props: {},
+      redirect: { destination: "/login" },
+    };
+  }
 };
 
 interface GraphProps {
