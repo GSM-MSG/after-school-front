@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { PropListType } from "../../types";
 import userCheck from "../../lib/userCheck";
 import admin from "../../lib/admin";
+import SEO from "../../components/SEO";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
@@ -38,6 +39,7 @@ const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
   const [create, setCreate] = useState(false);
   return (
     <>
+      <SEO title="GCMS | admin" />
       <Header clickModal={setCreate} />
       <AdminAfterSchool data={data} />
       {create && <CreateAfterSchool setCreate={setCreate} />}

@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { ApplyUserType } from "../../types";
 import userCheck from "../../lib/userCheck";
 import admin from "../../lib/admin";
+import SEO from "../../components/SEO";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
@@ -39,6 +40,7 @@ const StuList: NextPage<StulistProps> = ({ data }) => {
 
   return (
     <>
+      <SEO title="GCMS | students" />
       <Header clickModal={setCreate} />
       <AdminStuList data={data} />
       {create && <CreateAfterSchool setCreate={setCreate} />}

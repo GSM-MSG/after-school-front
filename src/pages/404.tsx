@@ -2,12 +2,14 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import SEO from "../components/SEO";
 
 export default function NotFound() {
   const router = useRouter();
 
   return (
     <Wrapper>
+      <SEO title="GCMS | NotFound" />
       <Image src="/png/404.png" width={594.8} height={671} />
       <HomeButton onClick={() => router.push("/")}>홈으로</HomeButton>
     </Wrapper>
