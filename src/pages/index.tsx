@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import Header from "../components/Header";
 import NomalAfterSchool from "../components/NomalAfterSchool";
+import SEO from "../components/SEO";
 import api from "../lib/api";
 import userCheck from "../lib/userCheck";
 import { PropListType } from "../types";
@@ -35,6 +36,7 @@ interface AfterSchoolProps {
 const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
   return (
     <>
+      <SEO title="GCMS" />
       <Header turn={false} />
       <NomalAfterSchool data={data} />
     </>

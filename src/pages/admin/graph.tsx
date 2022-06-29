@@ -3,6 +3,7 @@ import { useState } from "react";
 import AdminGraph from "../../components/AdminGraph";
 import { CreateAfterSchool } from "../../components/CreateAfterSchool";
 import Header from "../../components/Header";
+import SEO from "../../components/SEO";
 import admin from "../../lib/admin";
 import userCheck from "../../lib/userCheck";
 import { ClubStatistics } from "../../types";
@@ -42,6 +43,7 @@ const Graph: NextPage<GraphProps> = ({ clubData }) => {
 
   return (
     <>
+      <SEO title="GCMS | graph" />
       <Header clickModal={setCreate} />
       <AdminGraph clubData={clubData} />
       {create && <CreateAfterSchool setCreate={setCreate} />}

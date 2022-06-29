@@ -1,5 +1,11 @@
 import AdminLogin from "../../components/AdminLogin";
+import SEO from "../../components/SEO";
 
 export default function AdminPage() {
-  return <AdminLogin />;
+  return (
+    <>
+      <SEO title="GCMS | admin login" />
+      <AdminLogin />
+    </>
+  );
 }
