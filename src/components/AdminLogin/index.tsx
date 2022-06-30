@@ -20,7 +20,7 @@ export default function AdminLogin() {
         ...data,
       });
 
-      router.push("/admin/afterSchool");
+      router.push("/admin/afterschool");
 
       toast.success("로그인 성공");
     } catch (e) {

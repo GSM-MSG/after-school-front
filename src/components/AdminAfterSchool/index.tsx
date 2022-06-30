@@ -75,7 +75,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     type: "open" | "close"
   ) => {
     try {
-      await checkQuery(async () => admin.put(`afterSchool/${type}/${id}`));
+      await checkQuery(async () => admin.put(`afterschool/${type}/${id}`));
 
       setAfterSchools(
         produce(afterSchools, (draft) => {

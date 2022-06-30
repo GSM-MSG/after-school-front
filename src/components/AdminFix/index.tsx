@@ -82,7 +82,7 @@ export function AdminFix({
     }
     try {
       await checkQuery(async () =>
-        admin.put(`/afterSchool/${state.id}`, {
+        admin.put(`/afterschool/${state.id}`, {
           ...state,
           yearOf: new Date().getFullYear(),
           id: undefined,

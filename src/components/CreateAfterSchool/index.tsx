@@ -48,7 +48,7 @@ export function CreateAfterSchool({
   const onSubmit = async () => {
     try {
       await checkQuery(async () =>
-        admin.post("/afterSchool", {
+        admin.post("/afterschool", {
           title,
           grade,
           dayOfWeek: day,

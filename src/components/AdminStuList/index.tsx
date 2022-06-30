@@ -19,7 +19,7 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
   const onDelete = async (email: string) => {
     try {
       await checkQuery(async () =>
-        admin.patch(`/afterSchool/users/${router.query.afterSchoolIdx}`)
+        admin.patch(`/afterschool/users/${router.query.afterSchoolIdx}`)
       );
 
       setUsers(
