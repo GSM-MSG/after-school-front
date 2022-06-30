@@ -16,7 +16,7 @@ export default function AdminLogin() {
 
   const onSubmit: SubmitHandler<HandlerType> = async (data) => {
     try {
-      await admin.post("/teacher", {
+      await admin.post("/teacher/login", {
         ...data,
       });
 
@@ -43,7 +43,7 @@ export default function AdminLogin() {
         <S.LoginTitle>Sign in</S.LoginTitle>
         <S.LoginInput
           {...register("userId", { required: true })}
-          placeholder="아이디을 입력하세요"
+          placeholder="아이디를 입력하세요"
           autoComplete="off"
         />
         <S.LoginInput
