@@ -8,7 +8,7 @@ const userCheck = async (ctx: GetServerSidePropsContext) => {
 
   if (!accessToken) {
     const res = await api.post(
-      "/auth/refresh/web",
+      "/auth/teacher/refreshtoken",
       {},
       { headers: { cookie: `refreshToken=${refreshToken};` } }
     );
