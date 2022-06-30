@@ -10,8 +10,8 @@ const userCheck =
     let cookies: string[] | undefined;
 
     if (!accessToken) {
-      const res = await check.post(
-        "/auth/teacher/refreshtoken",
+      const res = await check[isClient ? "patch" : "post"](
+        isClient ? "/auth/refresh" : "/auth/teacher/refreshtoken",
         {},
         { headers: { cookie: `refreshToken=${refreshToken};` } }
       );
