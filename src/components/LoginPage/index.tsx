@@ -17,7 +17,7 @@ export default function LoginPage() {
       <S.LoginWrapper>
         <SVG.LogoBlack />
         <S.LoginTitle>Sign in</S.LoginTitle>
-        <S.OauthButton href={`${ServerUrl}/auth/web`}>
+        <S.OauthButton href={`${ServerUrl}/auth/login`}>
           <SVG.Google />
           <S.LoginText>Sign in with Google</S.LoginText>
         </S.OauthButton>
