@@ -8,7 +8,7 @@ export default function LoginPage() {
     <S.Wrapper>
       <S.TitleWrapper>
         <S.MainTitle>
-          GCM 방과후
+          GSM 방과후
           <br />
           관리의 모든 것
         </S.MainTitle>
