@@ -21,7 +21,7 @@ export default function AdminLogin() {
         {
           ...data,
         },
-        { withCredentials: false }
+        { headers: { cookie: "" } }
       );
 
       router.push("/admin/afterSchool");
