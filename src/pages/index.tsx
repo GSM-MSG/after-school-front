@@ -8,7 +8,7 @@ import { PropListType } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const { cookies, accessToken } = await userCheck(ctx);
+    const { cookies, accessToken } = await userCheck(true)(ctx);
 
     const { data } = await api.get("/afterschool", {
       headers: { cookies: `accessToken=${accessToken}` },

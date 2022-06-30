@@ -10,7 +10,7 @@ import { ClubStatistics } from "../../types";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const { cookies, accessToken } = await userCheck(ctx);
+    const { cookies, accessToken } = await userCheck()(ctx);
 
     const { data } = await admin.get("/afterschool/statistics", {
       headers: { cookies: `accessToken=${accessToken}` },
