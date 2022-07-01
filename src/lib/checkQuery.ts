@@ -4,7 +4,7 @@ import api from "./api";
 
 const checkQuery = async (
   query: () => Promise<AxiosResponse>,
-  isClient: boolean
+  isClient?: boolean
 ) => {
   try {
     const { data } = await query();

@@ -27,10 +27,12 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
 
   const applyAndCancel = async (id: number, isApplied: boolean) => {
     try {
-      await checkQuery(async () =>
-        api.post(`afterschool/${isApplied ? "cancel" : "apply"}`, {
-          afterSchoolId: id,
-        })
+      await checkQuery(
+        async () =>
+          api.post(`afterschool/${isApplied ? "cancel" : "apply"}`, {
+            afterSchoolId: id,
+          }),
+        true
       );
 
       setAfterSchools(
