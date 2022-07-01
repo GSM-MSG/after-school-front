@@ -1,12 +1,18 @@
 import { AxiosResponse } from "axios";
+import admin from "./admin";
 import api from "./api";
 
-const checkQuery = async (query: () => Promise<AxiosResponse>) => {
+const checkQuery = async (
+  query: () => Promise<AxiosResponse>,
+  isClient: boolean
+) => {
   try {
     const { data } = await query();
     return data;
   } catch (e) {
-    await api.post("/auth/refresh/web");
+    isClient
+      ? await api.post("/auth/refresh/web")
+      : await admin.get("/teacher/refreshToken");
     const { data } = await query();
     return data;
   }
