@@ -16,13 +16,9 @@ export default function AdminLogin() {
 
   const onSubmit: SubmitHandler<HandlerType> = async (data) => {
     try {
-      await admin.post(
-        "/teacher/login",
-        {
-          ...data,
-        },
-        { headers: { cookies: "", cookie: "" } }
-      );
+      await admin.post("/teacher/login", {
+        ...data,
+      });
 
       router.push("/admin/afterSchool");
 

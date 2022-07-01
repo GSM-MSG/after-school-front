@@ -23,6 +23,7 @@ interface AdminAfterSchoolProps {
 
 const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
   const [afterSchools, setAfterSchools] = useState<Type.PropListType[]>(data);
+  console.log(data);
   //선택한 버튼의 상태 관리
   const [category, setCategory] = useState<number>();
   //요일 오브젝트
