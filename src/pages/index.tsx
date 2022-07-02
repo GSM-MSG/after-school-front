@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { cookies, accessToken } = await userCheck(true)(ctx);
 
     const { data } = await api.get("/afterschool", {
-      headers: { cookies: `accessToken=${accessToken}` },
+      headers: { cookie: `accessToken=${accessToken}` },
     });
 
     console.log(data);
