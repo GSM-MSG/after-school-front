@@ -5,18 +5,18 @@ export type UserState = {
   id: number;
   title?: string;
   grade: GradeType[];
-  week: weekType[];
+  dayOfWeek: weekType[];
   isApplied: boolean;
 };
 export type weekType = "MON" | "TUE" | "WED";
 export type PropListType = {
   id: number;
   title: string;
-  week: weekType[];
+  dayOfWeek: weekType[];
   grade: GradeType[];
   season: SeasonType;
   teacher: string;
-  isOpend: boolean;
+  isOpened: boolean;
   isApplied: boolean;
   isEnabled: boolean;
 };

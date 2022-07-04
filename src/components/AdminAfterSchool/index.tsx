@@ -110,7 +110,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
             editAfterSchool({
               id: e.id,
               title: e.title,
-              week: e.week,
+              week: e.dayOfWeek,
               grade: e.grade,
               teacher: e.teacher,
               season: e.season,
@@ -245,13 +245,13 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
           {afterSchools
             .filter((i) => i.title.includes(search))
             .filter((i) => (grade ? i.grade.includes(grade) : true))
-            .filter((i) => (day ? i.week.includes(day as WeekType) : true))
+            .filter((i) => (day ? i.dayOfWeek.includes(day as WeekType) : true))
             .map((e: Type.PropListType, i) => {
               return (
                 <S.Enrolment key={i}>
                   <div>
                     <p>{e.title}</p>
-                    <p>{e.week.map((i) => WeekKorean[i]).join(", ")}</p>
+                    <p>{e.dayOfWeek.map((i) => WeekKorean[i]).join(", ")}</p>
                     <p>{e.grade.join(", ")}</p>
                   </div>
                   {makeSelectButton(e)}
