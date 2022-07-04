@@ -9,7 +9,7 @@ const userCheck =
     const refreshToken = ctx.req.cookies["refreshToken"];
     let cookies: string[] | undefined;
 
-    if (!accessToken) {
+    if (!accessToken || typeof accessToken !== "string") {
       const res = await check[isClient ? "patch" : "post"](
         isClient ? "/auth/refresh" : "/auth/teacher/refreshtoken",
         {},
