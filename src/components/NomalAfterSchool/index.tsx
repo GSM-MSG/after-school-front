@@ -86,7 +86,7 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
           {afterSchools
             .filter((i) => {
               if (!week) return i;
-              return i.week.includes(week);
+              return i.dayOfWeek.includes(week);
             })
             .filter((i) => {
               if (!grade) return i;
@@ -94,11 +94,13 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
             })
             .map(
               (i) =>
-                i.isOpend && (
+                i.isOpened && (
                   <S.Enrolment key={i.id}>
                     <div>
                       <p>{i.title}</p>
-                      <p>{i.week.map((week) => WeekKorean[week]).join(", ")}</p>
+                      <p>
+                        {i.dayOfWeek.map((week) => WeekKorean[week]).join(", ")}
+                      </p>
                       <p>{i.grade.join(", ")}</p>
                     </div>
                     {i.isEnabled && (
