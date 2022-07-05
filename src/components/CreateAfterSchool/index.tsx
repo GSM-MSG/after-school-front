@@ -1,16 +1,25 @@
+import produce from "immer";
+import { NextPage } from "next";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import admin from "../../lib/admin";
 import checkQuery from "../../lib/checkQuery";
+import { PropListType } from "../../types";
 import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
 
-export function CreateAfterSchool({
-  setCreate,
-}: {
+interface CreateAfterSchoolProps {
+  afterSchools?: PropListType[];
+  setAfterSchools?: Dispatch<SetStateAction<PropListType[]>>;
   setCreate: Dispatch<SetStateAction<boolean>>;
-}) {
-  const [afterSchool, setafterSchool] = useState<string>("Normal");
+}
+
+export const CreateAfterSchool: NextPage<CreateAfterSchoolProps> = ({
+  setCreate,
+  afterSchools,
+  setAfterSchools,
+}) => {
+  const [type, setType] = useState<string>("Normal");
   const [day, setDay] = useState<string[]>(["MON"]);
   const [grade, setGrade] = useState<number[]>([1]);
   const [title, setTitle] = useState<string>("");
@@ -18,7 +27,7 @@ export function CreateAfterSchool({
   const [teacher, setTeacher] = useState<string>("");
 
   const ChangeAfter = (e: React.MouseEvent) =>
-    setafterSchool((e.target as HTMLButtonElement).name);
+    setType((e.target as HTMLButtonElement).name);
 
   const ChangeDay = (e: React.MouseEvent<HTMLButtonElement>) => {
     const name = `${e.currentTarget.getAttribute("name")}`;
@@ -46,17 +55,26 @@ export function CreateAfterSchool({
     setTeacher(e.target.value);
 
   const onSubmit = async () => {
+    const body = {
+      title,
+      grade,
+      dayOfWeek: day,
+      teacher,
+      season,
+      yearOf: new Date().getFullYear(),
+    };
     try {
-      await checkQuery(async () =>
-        admin.post("/afterschool", {
-          title,
-          grade,
-          dayOfWeek: day,
-          teacher,
-          season,
-          yearOf: new Date().getFullYear(),
-        })
+      const data = await checkQuery<PropListType>(async () =>
+        admin.post<PropListType>("/afterschool", body)
       );
+
+      if (afterSchools && setAfterSchools)
+        setAfterSchools(
+          produce(afterSchools, (draft) => {
+            draft.push(data);
+          })
+        );
+
       setCreate(false);
     } catch (e) {
       toast.error("동아리 개설에 실패했습니다");
@@ -107,7 +125,7 @@ export function CreateAfterSchool({
           <div>
             <S.ChangrButton
               onClick={ChangeAfter}
-              active={afterSchool === "Normal"}
+              active={type === "Normal"}
               position="left"
               name="Normal"
             >
@@ -115,7 +133,7 @@ export function CreateAfterSchool({
             </S.ChangrButton>
             <S.ChangrButton
               onClick={ChangeAfter}
-              active={afterSchool === "EDITORIAL"}
+              active={type === "EDITORIAL"}
               position="right"
               name="EDITORIAL"
             >
@@ -204,4 +222,4 @@ export function CreateAfterSchool({
       <S.bg onClick={() => setCreate(false)} />
     </>
   );
-}
+};

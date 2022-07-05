@@ -11,3 +11,4 @@ export * from "./FixAfterSchool";
 export * from "./ApplyUserType";
 export * from "./GradeType";
 export * from "./ClubStatistics";
+export * from "./AfterSchoolApiType";

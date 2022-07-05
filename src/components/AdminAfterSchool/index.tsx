@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import * as S from "./styles";
 import * as Type from "../../types/AfterSchoolType";
 import * as SVG from "../../SVG";
@@ -18,12 +18,14 @@ import { Week } from "../../lib/Week";
 import admin from "../../lib/admin";
 
 interface AdminAfterSchoolProps {
-  data: Type.PropListType[];
+  afterSchools: Type.PropListType[];
+  setAfterSchools: Dispatch<SetStateAction<Type.PropListType[]>>;
 }
 
-const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
-  const [afterSchools, setAfterSchools] = useState<Type.PropListType[]>(data);
-  console.log(data);
+const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
+  afterSchools,
+  setAfterSchools,
+}) => {
   //선택한 버튼의 상태 관리
   const [category, setCategory] = useState<number>();
   //요일 오브젝트
@@ -130,28 +132,21 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({ data }) => {
     } else if (category === 2) {
       router.push("/admin/graph");
     } else if (category === 3) {
-      switch (e.isApplied) {
-        case true:
-          return (
-            <S.SelectButton
-              onClick={() => closeAndOpenAfterSchool(e.id, "close")}
-              color={"red"}
-            >
-              마감하기
-            </S.SelectButton>
-          );
-        case false:
-          return (
-            <S.SelectButton
-              onClick={() => closeAndOpenAfterSchool(e.id, "open")}
-              color={"blue"}
-            >
-              신청받기
-            </S.SelectButton>
-          );
-        default:
-          return;
-      }
+      return e.isOpened ? (
+        <S.SelectButton
+          onClick={() => closeAndOpenAfterSchool(e.id, "close")}
+          color={"red"}
+        >
+          마감하기
+        </S.SelectButton>
+      ) : (
+        <S.SelectButton
+          onClick={() => closeAndOpenAfterSchool(e.id, "open")}
+          color={"blue"}
+        >
+          신청받기
+        </S.SelectButton>
+      );
     } else {
       return (
         <Link href="/admin/stulist">

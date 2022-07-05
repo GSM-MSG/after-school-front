@@ -18,7 +18,6 @@ export type PropListType = {
   teacher: string;
   isOpened: boolean;
   isApplied: boolean;
-  isEnabled: boolean;
 };
 
 export type ChangeWeekType = (e: "MON" | "TUE" | "WED") => any;

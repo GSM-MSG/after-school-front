@@ -4,7 +4,7 @@ import NomalAfterSchool from "../components/NomalAfterSchool";
 import SEO from "../components/SEO";
 import api from "../lib/api";
 import userCheck from "../lib/userCheck";
-import { PropListType } from "../types";
+import { AfterSchoolApiType } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 interface AfterSchoolProps {
-  data: PropListType[];
+  data: AfterSchoolApiType;
 }
 
 const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
