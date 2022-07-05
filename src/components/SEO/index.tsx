@@ -11,6 +11,7 @@ function SEO({ title, description = "방과후 관리 서비스" }: HeaderProps)
   return (
     <Head>
       <title>{title}</title>
+      <link rel="shortcut icon" type="image/x-icon" href={img} />
       <meta name="description" content={description} />
 
       <meta property="og:type" content="website" />
