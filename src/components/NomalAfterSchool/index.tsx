@@ -1,6 +1,11 @@
 import React, { MouseEvent, useState } from "react";
 import * as S from "./style";
-import { GradeType, PropListType, WeekType } from "../../types";
+import {
+  AfterSchoolApiType,
+  GradeType,
+  PropListType,
+  WeekType,
+} from "../../types";
 import { NextPage } from "next";
 import { WeekKorean } from "../../lib/WeekKorean";
 import produce from "immer";
@@ -9,11 +14,11 @@ import { toast } from "react-toastify";
 import checkQuery from "../../lib/checkQuery";
 
 interface NomalAfterSchoolProps {
-  data: PropListType[];
+  data: AfterSchoolApiType;
 }
 
 const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
-  const [afterSchools, setAfterSchools] = useState<PropListType[]>(data);
+  const [afterSchools, setAfterSchools] = useState<PropListType[]>(data.list);
   const [week, setWeek] = useState<WeekType | null>(null);
   const [grade, setGrade] = useState<GradeType | null>(null);
 
@@ -103,11 +108,19 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                       </p>
                       <p>{i.grade.join(", ")}</p>
                     </div>
-                    {i.isEnabled && (
+
+                    {i.isOpened && (
                       <S.SelectButton
                         onClick={() => applyAndCancel(i.id, i.isApplied)}
                       >
-                        {i.isApplied ? "취소" : "신청"}
+                        {i.grade.includes(data.currentGrade) ||
+                        i.dayOfWeek.filter((i) =>
+                          data.appliedWeek.includes(i)
+                        )[0]
+                          ? ""
+                          : i.isApplied
+                          ? "신청"
+                          : "취소"}
                       </S.SelectButton>
                     )}
                   </S.Enrolment>

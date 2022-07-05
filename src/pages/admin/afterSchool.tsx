@@ -7,6 +7,7 @@ import { PropListType } from "../../types";
 import userCheck from "../../lib/userCheck";
 import admin from "../../lib/admin";
 import SEO from "../../components/SEO";
+import * as Type from "../../types/AfterSchoolType";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
@@ -40,12 +41,23 @@ interface AfterSchoolProps {
 
 const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
   const [create, setCreate] = useState(false);
+  const [afterSchools, setAfterSchools] = useState<Type.PropListType[]>(data);
+
   return (
     <>
       <SEO title="GCMS | admin" />
       <Header clickModal={setCreate} />
-      <AdminAfterSchool data={data} />
-      {create && <CreateAfterSchool setCreate={setCreate} />}
+      <AdminAfterSchool
+        setAfterSchools={setAfterSchools}
+        afterSchools={afterSchools}
+      />
+      {create && (
+        <CreateAfterSchool
+          afterSchools={afterSchools}
+          setAfterSchools={setAfterSchools}
+          setCreate={setCreate}
+        />
+      )}
     </>
   );
 };
