@@ -9,7 +9,7 @@ const userCheck = async (
   const check = isClient ? api : admin;
   let accessToken = ctx.req.cookies[`${isClient ? "a" : "adminA"}ccessToken`];
   const refreshToken =
-    ctx.req.cookies[`${isClient ? "r" : "adminR"}refreshToken`];
+    ctx.req.cookies[`${isClient ? "r" : "adminR"}efreshToken`];
   let cookies: string[] | undefined;
 
   console.log(accessToken, refreshToken);
