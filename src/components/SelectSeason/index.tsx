@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
-import api from "../../lib/api";
+import admin from "../../lib/admin";
 import checkQuery from "../../lib/checkQuery";
 import { SeasonType } from "../../types/SeasonType";
 import * as S from "./styles";
@@ -19,7 +19,7 @@ export default function SelectSeason({
   const onSubmit = async () => {
     try {
       await checkQuery(async () =>
-        api.put(`/afterSchool/${type}/all`, {
+        admin.put(`/afterSchool/${type}/all`, {
           season,
           year: new Date().getFullYear(),
         })
