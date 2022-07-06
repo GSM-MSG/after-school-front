@@ -15,7 +15,7 @@ const userCheck = async (
 
   if (!accessToken || typeof accessToken !== "string") {
     const res = await check[isClient ? "patch" : "post"](
-      isClient ? "/auth/refresh" : "/auth/teacher/refreshtoken",
+      isClient ? "/auth/refresh" : "/teacher/refreshtoken",
       {},
       { headers: { cookie: `refreshToken=${refreshToken};` } }
     );
