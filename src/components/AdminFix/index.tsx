@@ -85,7 +85,8 @@ export function AdminFix({
         admin.put(`/afterschool/${state.id}`, {
           ...state,
           yearOf: new Date().getFullYear(),
-          id: undefined,
+          dayOfWeek: state.week,
+          week: undefined,
         })
       );
 
