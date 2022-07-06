@@ -109,9 +109,10 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                       <p>{i.grade.join(", ")}</p>
                     </div>
                     {!i.grade.includes(data.currentGrade) ||
-                      (!i.dayOfWeek.filter((i) =>
+                      ((!i.dayOfWeek.filter((i) =>
                         data.appliedWeek.includes(i)
-                      )[0] && (
+                      )[0] ||
+                        i.isApplied) && (
                         <S.SelectButton
                           onClick={() => applyAndCancel(i.id, i.isApplied)}
                         >
