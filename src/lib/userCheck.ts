@@ -20,7 +20,7 @@ const userCheck = async (
       {},
       {
         headers: {
-          cookie: `${isClient ? "r" : "adminR"}efreshToken=${refreshToken};`,
+          cookie: `${isClient ? "r" : "adminR"}efreshtoken=${refreshToken};`,
         },
       }
     );
