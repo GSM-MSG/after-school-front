@@ -1,13 +1,13 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
-import AdminAfterSchool from "../../../components/AdminAfterSchool";
-import { CreateAfterSchool } from "../../../components/CreateAfterSchool";
-import Header from "../../../components/Header";
-import { PropListType } from "../../../types";
-import userCheck from "../../../lib/userCheck";
-import admin from "../../../lib/admin";
-import SEO from "../../../components/SEO";
-import * as Type from "../../../types/AfterSchoolType";
+import AdminAfterSchool from "../../components/AdminAfterSchool";
+import { CreateAfterSchool } from "../../components/CreateAfterSchool";
+import Header from "../../components/Header";
+import { PropListType } from "../../types";
+import userCheck from "../../lib/userCheck";
+import admin from "../../lib/admin";
+import SEO from "../../components/SEO";
+import * as Type from "../../types/AfterSchoolType";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
