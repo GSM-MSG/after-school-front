@@ -119,8 +119,8 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                         )[0]
                           ? ""
                           : i.isApplied
-                          ? "신청"
-                          : "취소"}
+                          ? "취소"
+                          : "신청"}
                       </S.SelectButton>
                     )}
                   </S.Enrolment>
