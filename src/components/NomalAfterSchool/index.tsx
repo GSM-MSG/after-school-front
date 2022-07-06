@@ -110,16 +110,16 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                     </div>
                     {i.grade.includes(data.currentGrade) && (
                       <>
-                        {!i.dayOfWeek.filter((i) =>
+                        {(!i.dayOfWeek.filter((i) =>
                           data.appliedWeek.includes(i)
-                        )[0] &&
-                          !i.isApplied && (
-                            <S.SelectButton
-                              onClick={() => applyAndCancel(i.id, i.isApplied)}
-                            >
-                              {i.isApplied ? "취소" : "신청"}
-                            </S.SelectButton>
-                          )}
+                        )[0] ||
+                          !i.isApplied) && (
+                          <S.SelectButton
+                            onClick={() => applyAndCancel(i.id, i.isApplied)}
+                          >
+                            {i.isApplied ? "취소" : "신청"}
+                          </S.SelectButton>
+                        )}
                       </>
                     )}
                   </S.Enrolment>
