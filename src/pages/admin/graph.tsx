@@ -16,6 +16,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       headers: { cookie: `adminAccessToken=${accessToken}` },
     });
 
+    console.log(data);
+
     if (cookies) ctx.res.setHeader("set-cookie", cookies);
 
     return {
@@ -24,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   } catch (e) {
+    console.log(e);
     return {
       props: {},
       redirect: { destination: "/login" },

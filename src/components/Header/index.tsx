@@ -17,16 +17,10 @@ const Header: NextPage<HeaderProps> = ({ turn = true, clickModal }) => {
         <S.Logo>GCMS</S.Logo>
       </Link>
       <S.Icons>
-        {turn ? (
+        {turn && (
           <div onClick={() => clickModal && clickModal(true)}>
             <SVG.Plus />
           </div>
-        ) : (
-          <Link href="/my">
-            <a>
-              <SVG.UserIcon />
-            </a>
-          </Link>
         )}
       </S.Icons>
     </S.Wrapper>
