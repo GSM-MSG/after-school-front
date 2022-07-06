@@ -58,7 +58,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
 
   const deleteAfterSchool = async (id: number) => {
     try {
-      await checkQuery(async () => admin.delete(`afterSchool/${id}`));
+      await checkQuery(async () => admin.delete(`afterschool/${id}`));
 
       setAfterSchools(afterSchools.filter((i) => i.id !== id));
 
