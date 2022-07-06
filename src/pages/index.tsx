@@ -8,7 +8,7 @@ import { AfterSchoolApiType } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
-    const { cookies, accessToken } = await userCheck(true)(ctx);
+    const { cookies, accessToken } = await userCheck(ctx, true);
 
     const { data } = await api.get("/afterschool", {
       headers: { cookie: `accessToken=${accessToken}` },
