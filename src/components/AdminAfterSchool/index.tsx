@@ -149,7 +149,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
       );
     } else {
       return (
-        <Link href="/admin/stulist">
+        <Link href={`/admin/stulist/${e.id}`}>
           <S.SelectButton color={"blue"}>명단보기</S.SelectButton>
         </Link>
       );
