@@ -113,7 +113,7 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                         {(!i.dayOfWeek.filter((i) =>
                           data.appliedWeek.includes(i)
                         )[0] ||
-                          !i.isApplied) && (
+                          i.isApplied) && (
                           <S.SelectButton
                             onClick={() => applyAndCancel(i.id, i.isApplied)}
                           >
