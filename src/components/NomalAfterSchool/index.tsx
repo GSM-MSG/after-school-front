@@ -4,6 +4,7 @@ import {
   AfterSchoolApiType,
   GradeType,
   PropListType,
+  weekType,
   WeekType,
 } from "../../types";
 import { NextPage } from "next";
@@ -19,6 +20,7 @@ interface NomalAfterSchoolProps {
 
 const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
   const [afterSchools, setAfterSchools] = useState<PropListType[]>(data.list);
+  const [appliedWeek, setAppliedWeek] = useState<WeekType[]>(data.appliedWeek);
   const [week, setWeek] = useState<WeekType | null>(null);
   const [grade, setGrade] = useState<GradeType | null>(null);
 
@@ -30,7 +32,11 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
     } else setWeek(value === week ? null : value);
   };
 
-  const applyAndCancel = async (id: number, isApplied: boolean) => {
+  const applyAndCancel = async (
+    id: number,
+    isApplied: boolean,
+    dayOfWeek: weekType[]
+  ) => {
     try {
       await checkQuery(
         async () =>
@@ -43,9 +49,18 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
       setAfterSchools(
         produce(afterSchools, (draft) => {
           return draft.map((i) => {
-            if (i.id === id) return { ...i, isApplied: !isApplied };
+            if (i.id === id) {
+              return { ...i, isApplied: !isApplied };
+            }
             return i;
           });
+        })
+      );
+
+      setAppliedWeek(
+        produce(appliedWeek, (draft) => {
+          if (isApplied) return draft.filter((i) => !dayOfWeek.includes(i));
+          return [...draft, ...dayOfWeek];
         })
       );
     } catch (e) {
@@ -115,7 +130,9 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
                         )[0] ||
                           i.isApplied) && (
                           <S.SelectButton
-                            onClick={() => applyAndCancel(i.id, i.isApplied)}
+                            onClick={() =>
+                              applyAndCancel(i.id, i.isApplied, i.dayOfWeek)
+                            }
                           >
                             {i.isApplied ? "취소" : "신청"}
                           </S.SelectButton>
