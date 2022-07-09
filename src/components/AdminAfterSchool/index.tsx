@@ -86,7 +86,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
             if (i.id === id)
               return {
                 ...i,
-                isOpend: type === "open",
+                isOpened: type === "open",
               };
             return i;
           });
@@ -241,7 +241,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
             .filter((i) => i.title.includes(search))
             .filter((i) => (grade ? i.grade.includes(grade) : true))
             .filter((i) => (day ? i.dayOfWeek.includes(day as WeekType) : true))
-            .map((e: Type.PropListType, i) => {
+            .map((e, i) => {
               return (
                 <S.Enrolment key={i}>
                   <div>
