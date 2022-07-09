@@ -23,9 +23,9 @@ const Header: NextPage<HeaderProps> = ({
       </Link>
       <S.Icons>
         {turn && (
-          <div onClick={() => clickModal && clickModal(true)}>
+          <S.Icon onClick={() => clickModal && clickModal(true)}>
             <SVG.Plus />
-          </div>
+          </S.Icon>
         )}
       </S.Icons>
     </S.Wrapper>

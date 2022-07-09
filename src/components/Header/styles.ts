@@ -27,3 +27,7 @@ export const Icons = styled.div`
   align-items: center;
   gap: 3rem;
 `;
+
+export const Icon = styled.div`
+  cursor: pointer;
+`;

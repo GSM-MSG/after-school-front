@@ -19,10 +19,9 @@ export default function SelectSeason({
   const onSubmit = async () => {
     try {
       await checkQuery(async () =>
-        admin.put(`/afterschool/${type}/all`, {
-          season,
-          year: new Date().getFullYear(),
-        })
+        admin.put(
+          `/afterschool/${type}/all?season=${season}&year=${new Date().getFullYear()}`
+        )
       );
 
       setAllSelect(false);
