@@ -75,7 +75,7 @@ const AdminGraph: NextPage<AdminGraphProps> = ({ clubData }) => {
           </S.ListTitle>
           <S.ListBox>
             {clubData.afterSchools
-              .filter((e) => e.week.includes(week))
+              .filter((e) => e.dayOfWeekList.includes(week))
               .map((e) => {
                 return (
                   <S.List
@@ -83,14 +83,16 @@ const AdminGraph: NextPage<AdminGraphProps> = ({ clubData }) => {
                     onClick={() => {
                       setValue(0);
                       setListActive(e.afterSchoolIdx);
-                      setClubName(e.title);
+                      setClubName(e.afterSchoolTitle);
                       setAttend(e.attend);
                       setAttendValue(0);
                     }}
                     active={listActive === e.afterSchoolIdx}
                   >
-                    <span>{e.title}</span>
-                    <span>{e.week.map((i) => WeekKorean[i]).join(", ")}</span>
+                    <span>{e.afterSchoolTitle}</span>
+                    <span>
+                      {e.dayOfWeekList.map((i) => WeekKorean[i]).join(", ")}
+                    </span>
                     <span>{e.attend}</span>
                     <span>{MakePercent(e.attend)}%</span>
                     <span>{e.grade.join(", ")}학년</span>

@@ -3,8 +3,8 @@ import { WeekType } from "./WeekType";
 
 export interface ClubStatistics {
   afterSchoolIdx: number;
-  week: WeekType[];
-  title: string;
+  dayOfWeekList: WeekType[];
+  afterSchoolTitle: string;
   attend: number;
   grade: GradeType[];
 }
