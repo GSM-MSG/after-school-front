@@ -86,7 +86,7 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
             if (i.id === id)
               return {
                 ...i,
-                isOpend: type === "open",
+                isOpend: type === "close",
               };
             return i;
           });
