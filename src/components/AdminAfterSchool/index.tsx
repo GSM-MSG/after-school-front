@@ -82,11 +82,11 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
 
       setAfterSchools(
         produce(afterSchools, (draft) => {
-          draft = draft.map((i) => {
+          return draft.map((i) => {
             if (i.id === id)
               return {
                 ...i,
-                isOpend: type === "close",
+                isOpend: type === "open",
               };
             return i;
           });
