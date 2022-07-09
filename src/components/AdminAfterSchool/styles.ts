@@ -147,9 +147,12 @@ export const Enrolment = styled.div`
     width: 90vw;
   }
 `;
-export const SelectButton = styled.button<ButtonType>`
+export const SelectButton = styled.a<ButtonType>`
   width: 6rem;
   height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: 5px;
   cursor: pointer;
