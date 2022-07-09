@@ -7,13 +7,18 @@ import * as S from "./styles";
 
 interface HeaderProps {
   turn?: boolean;
+  isClient?: boolean;
   clickModal?: Dispatch<SetStateAction<boolean>>;
 }
 
-const Header: NextPage<HeaderProps> = ({ turn = true, clickModal }) => {
+const Header: NextPage<HeaderProps> = ({
+  turn = true,
+  clickModal,
+  isClient,
+}) => {
   return (
     <S.Wrapper>
-      <Link href="/">
+      <Link href={isClient ? "/" : "/admin/afterSchool"}>
         <S.Logo>GCMS</S.Logo>
       </Link>
       <S.Icons>

@@ -40,7 +40,7 @@ const AfterSchool: NextPage<AfterSchoolProps> = ({ data }) => {
   return (
     <>
       <SEO title="GCMS" />
-      <Header turn={false} />
+      <Header isClient turn={false} />
       <NomalAfterSchool data={data} />
     </>
   );
