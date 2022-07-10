@@ -26,7 +26,7 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
 
       setUsers(
         produce(users, (draft) => {
-          draft = draft.filter((i) => i.email !== email);
+          return draft.filter((i) => i.email !== email);
         })
       );
 
