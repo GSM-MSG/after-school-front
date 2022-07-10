@@ -12,9 +12,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const { cookies, accessToken } = await userCheck(ctx);
 
-    const { data } = await admin.get(`/users/${ctx.query.afterSchoolIdx}`, {
-      headers: { cookie: `adminAccessToken=${accessToken}` },
-    });
+    const { data } = await admin.get(
+      `/afterschool/users/${ctx.query.afterSchoolIdx}`,
+      {
+        headers: { cookie: `adminAccessToken=${accessToken}` },
+      }
+    );
 
     if (cookies) ctx.res.setHeader("set-cookie", cookies);
 
