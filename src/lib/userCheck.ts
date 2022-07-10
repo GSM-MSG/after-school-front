@@ -8,7 +8,8 @@ const userCheck = async (
 ) => {
   const check = isClient ? api : admin;
   let accessToken = ctx.req.cookies[`${isClient ? "a" : "adminA"}ccessToken`];
-  const refreshToken = ctx.req.cookies[`${isClient ? "r" : "adminR"}efreshToken`];
+  const refreshToken =
+    ctx.req.cookies[`${isClient ? "r" : "adminR"}efreshToken`];
   let cookies: string[] | undefined;
 
   console.log(accessToken, refreshToken);
@@ -25,7 +26,8 @@ const userCheck = async (
     );
 
     cookies = res.headers["set-cookie"];
-    accessToken = res.data.accessToken;
+    if (isClient) accessToken = res.data.accessToken;
+    else accessToken = res.data.adminAccessToken;
   }
 
   return { cookies, accessToken };

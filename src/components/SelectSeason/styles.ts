@@ -64,6 +64,7 @@ export const RadioBox = styled.div`
       border: 2px solid #00a8fe;
       transition: 0.2s all;
       margin-right: 5px;
+      aspect-ratio: 1 / 1;
 
       position: relative;
 
@@ -72,6 +73,7 @@ export const RadioBox = styled.div`
           content: "";
           width: 10px;
           height: 10px;
+          aspect-ratio: 1 / 1;
           background: #00a8fe;
           position: absolute;
           border-radius: 50%;
