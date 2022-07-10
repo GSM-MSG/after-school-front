@@ -12,7 +12,7 @@ const checkQuery = async <T>(
   } catch (e) {
     isClient
       ? await api.post("/auth/refresh/web")
-      : await admin.get("/teacher/refreshtoken");
+      : await admin.post("/teacher/refreshtoken");
     const { data } = await query();
     return data;
   }

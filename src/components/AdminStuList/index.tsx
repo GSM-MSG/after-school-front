@@ -19,7 +19,9 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
   const onDelete = async (email: string) => {
     try {
       await checkQuery(async () =>
-        admin.patch(`/afterschool/users/${router.query.afterSchoolIdx}`)
+        admin.patch(`/afterschool/users/${router.query.afterSchoolIdx}`, {
+          email,
+        })
       );
 
       setUsers(
@@ -51,7 +53,7 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
                 <S.UserImg src={item.userImg} />
                 <div>
                   <p>{item.name}</p>
-                  <p>{`${item.grade}학년 ${item.class_}반 ${item.num}번`}</p>
+                  <p>{`${item.grade}학년 ${item.class}반 ${item.num}번`}</p>
                 </div>
                 <button onClick={() => onDelete(item.email)}>삭제</button>
               </S.ListWrapper>
