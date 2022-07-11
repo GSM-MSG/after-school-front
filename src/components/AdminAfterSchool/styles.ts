@@ -83,26 +83,20 @@ export const CurseList = styled.div`
   font-size: 1rem;
   display: flex;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+
   span {
-    width: 4rem;
     text-align: center;
-    margin-left: 8rem;
-    @media (max-width: 55rem) {
-      margin-left: 13vw;
-      margin-right: 4vw;
-      white-space: nowrap;
-    }
-    @media (max-width: 30rem) {
-      font-size: 3.5vw;
-      margin-left: 8vw;
-      margin-right: 6vw;
-      white-space: nowrap;
-    }
+    flex: 1;
   }
+
   @media (max-width: 55rem) {
     width: 90vw;
     height: 4rem;
   }
+
   @media (max-width: 30rem) {
     height: 2rem;
   }
@@ -117,34 +111,13 @@ export const Enrolment = styled.div`
   border-radius: 5px;
   color: black;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  div {
-    width: 50rem;
-    display: flex;
-    @media (max-width: 55rem) {
-      width: 90vw;
-    }
-  }
+  padding: 0 1rem;
+
   p {
-    width: 4.5rem;
     text-align: center;
-    margin-left: 7.6rem;
-    white-space: nowrap;
-    @media (max-width: 55rem) {
-      margin-left: 12vw;
-      margin-right: 5vw;
-      white-space: nowrap;
-    }
-    @media (max-width: 30rem) {
-      margin-left: 7vw;
-      margin-right: 5vw;
-      white-space: nowrap;
-    }
-  }
-  @media (max-width: 55rem) {
-    display: block;
-    height: 6.5rem;
-    width: 90vw;
+    flex: 1;
   }
 `;
 export const SelectButton = styled.a<ButtonType>`
@@ -157,7 +130,6 @@ export const SelectButton = styled.a<ButtonType>`
   border-radius: 5px;
   cursor: pointer;
   color: white;
-  margin-right: 2rem;
   background-color: ${({ color }) => {
     switch (color) {
       case "blue":

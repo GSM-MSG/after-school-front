@@ -42,8 +42,8 @@ const AdminStuList: NextPage<AdminStuListProps> = ({ data }) => {
         <S.DeleteInform>
           <S.Title>학생정보 수정</S.Title>
           <div>
-            <p>월요일</p>
-            <p>30명</p>
+            <p>요일</p>
+            <p>{users.length}명</p>
           </div>
         </S.DeleteInform>
         <S.ListContainer>

@@ -212,7 +212,9 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
         <S.CurseList>
           <span>강좌</span>
           <span>강의시간</span>
+          <span>선생님</span>
           <span>대상학년</span>
+          <span />
         </S.CurseList>
         {category === 3 && (
           <S.AllButtonBox>
@@ -244,12 +246,11 @@ const AdminAfterSchool: NextPage<AdminAfterSchoolProps> = ({
             .map((e, i) => {
               return (
                 <S.Enrolment key={i}>
-                  <div>
-                    <p>{e.title}</p>
-                    <p>{e.dayOfWeek.map((i) => WeekKorean[i]).join(", ")}</p>
-                    <p>{e.grade.join(", ")}</p>
-                  </div>
-                  {makeSelectButton(e)}
+                  <p>{e.title}</p>
+                  <p>{e.dayOfWeek.map((i) => WeekKorean[i]).join(", ")}</p>
+                  <p>{e.teacher}</p>
+                  <p>{e.grade.join(", ")}</p>
+                  <p>{makeSelectButton(e)}</p>
                 </S.Enrolment>
               );
             })}
