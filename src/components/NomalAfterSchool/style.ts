@@ -26,28 +26,13 @@ export const CurseList = styled.div`
   font-size: 1rem;
   display: flex;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+
   span {
-    width: 4rem;
     text-align: center;
-    margin-left: 8rem;
-    @media (max-width: 55rem) {
-      margin-left: 13vw;
-      margin-right: 4vw;
-      white-space: nowrap;
-    }
-    @media (max-width: 30rem) {
-      font-size: 3.5vw;
-      margin-left: 8vw;
-      margin-right: 6vw;
-      white-space: nowrap;
-    }
-  }
-  @media (max-width: 55rem) {
-    width: 90vw;
-    height: 4rem;
-  }
-  @media (max-width: 30rem) {
-    height: 2rem;
+    flex: 1;
   }
 `;
 
@@ -60,34 +45,13 @@ export const Enrolment = styled.div`
   border-radius: 5px;
   color: black;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  div {
-    width: 50rem;
-    display: flex;
-    @media (max-width: 55rem) {
-      width: 90vw;
-    }
-  }
+  padding: 0 1rem;
+
   p {
-    width: 4.5rem;
     text-align: center;
-    margin-left: 7.6rem;
-    white-space: nowrap;
-    @media (max-width: 55rem) {
-      margin-left: 12vw;
-      margin-right: 5vw;
-      white-space: nowrap;
-    }
-    @media (max-width: 30rem) {
-      margin-left: 7vw;
-      margin-right: 5vw;
-      white-space: nowrap;
-    }
-  }
-  @media (max-width: 55rem) {
-    display: block;
-    height: 6.5rem;
-    width: 90vw;
+    flex: 1;
   }
 `;
 
@@ -129,11 +93,6 @@ export const SelectButton = styled.button<StlyedProps>`
     right: 100%;
     background: rgba(0, 0, 0, 0.1);
     transition: 0.2s cubic-bezier(0.23, 0.56, 0.68, 0.38);
-  }
-  @media (max-width: 55rem) {
-    display: block;
-    width: 85vw;
-    margin: 0 auto;
   }
 `;
 

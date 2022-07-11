@@ -91,15 +91,6 @@ export const CurseList = styled.div`
     text-align: center;
     flex: 1;
   }
-
-  @media (max-width: 55rem) {
-    width: 90vw;
-    height: 4rem;
-  }
-
-  @media (max-width: 30rem) {
-    height: 2rem;
-  }
 `;
 
 export const Enrolment = styled.div`
@@ -157,11 +148,6 @@ export const SelectButton = styled.a<ButtonType>`
     right: 100%;
     background: rgba(0, 0, 0, 0.1);
     transition: 0.5s cubic-bezier(0.23, 0.56, 0.68, 0.38);
-  }
-  @media (max-width: 55rem) {
-    display: block;
-    width: 85vw;
-    margin: 0 auto;
   }
 `;
 
@@ -231,9 +217,6 @@ export const AllButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 55rem) {
-    width: 90vw;
-  }
 `;
 
 export const AllButton = styled.button<ButtonType>`

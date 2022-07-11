@@ -100,7 +100,9 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
         <S.CurseList>
           <span>강좌</span>
           <span>강의시간</span>
+          <span>선생님</span>
           <span>대상학년</span>
+          <span />
         </S.CurseList>
         <S.ScollBox>
           {afterSchools
@@ -116,29 +118,30 @@ const NomalAfterSchool: NextPage<NomalAfterSchoolProps> = ({ data }) => {
               (i) =>
                 i.isOpened && (
                   <S.Enrolment key={i.id}>
-                    <div>
-                      <p>{i.title}</p>
-                      <p>
-                        {i.dayOfWeek.map((week) => WeekKorean[week]).join(", ")}
-                      </p>
-                      <p>{i.grade.join(", ")}</p>
-                    </div>
-                    {i.grade.includes(data.currentGrade) && (
-                      <>
-                        {(!i.dayOfWeek.filter((i) =>
-                          appliedWeek.includes(i)
-                        )[0] ||
-                          i.isApplied) && (
-                          <S.SelectButton
-                            onClick={() =>
-                              applyAndCancel(i.id, i.isApplied, i.dayOfWeek)
-                            }
-                          >
-                            {i.isApplied ? "취소" : "신청"}
-                          </S.SelectButton>
-                        )}
-                      </>
-                    )}
+                    <p>{i.title}</p>
+                    <p>
+                      {i.dayOfWeek.map((week) => WeekKorean[week]).join(", ")}
+                    </p>
+                    <p>{i.teacher}</p>
+                    <p>{i.grade.join(", ")}</p>
+                    <p>
+                      {i.grade.includes(data.currentGrade) && (
+                        <>
+                          {(!i.dayOfWeek.filter((i) =>
+                            appliedWeek.includes(i)
+                          )[0] ||
+                            i.isApplied) && (
+                            <S.SelectButton
+                              onClick={() =>
+                                applyAndCancel(i.id, i.isApplied, i.dayOfWeek)
+                              }
+                            >
+                              {i.isApplied ? "취소" : "신청"}
+                            </S.SelectButton>
+                          )}
+                        </>
+                      )}
+                    </p>
                   </S.Enrolment>
                 )
             )}
